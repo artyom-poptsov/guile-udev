@@ -3,8 +3,8 @@
 !#
 
 (use-modules (udev udev)
-	     (udev monitor)
-	     (udev device))
+             (udev monitor)
+             (udev device))
 
 (define (callback device)
   (display "device: ")
@@ -13,7 +13,7 @@
 
 (define (main args)
   (let* ((udev         (make-udev))
-	 (udev-monitor (make-udev-monitor udev)))
+         (udev-monitor (make-udev-monitor udev)))
     (udev-monitor-add-filter! udev-monitor "usb" "usb_device")
     (udev-monitor-set-callback! udev-monitor callback)
     (udev-monitor-start-scanning! udev-monitor)
