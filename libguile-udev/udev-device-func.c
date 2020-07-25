@@ -77,6 +77,17 @@ SCM_DEFINE(gudev_device_get_driver,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_device_get_udev,
+           "udev-device-get-udev", 1, 0, 0,
+           (SCM device),
+           "Get the parent udev object.")
+#define FUNC_NAME s_gudev_device_get_udev
+{
+     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     return udd->udev;
+}
+#undef FUNC_NAME
+
 
 void init_udev_device_func()
 {
