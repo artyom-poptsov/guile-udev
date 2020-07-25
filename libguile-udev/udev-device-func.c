@@ -3,15 +3,27 @@
 
 #include "udev-device-type.h"
 
+/**
+ * Get a string device property from an SCM device object.
+ */
+static SCM _get_string_property(SCM device,
+                                const char* (*func)(struct udev_device *))
+#define FUNC_NAME "_get_string_property"
+{
+     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     const char* result = func(udd->udev_device);
+     return scm_from_locale_string(result);
+}
+#undef FUNC_NAME
+
+
 SCM_DEFINE(gudev_device_get_action,
            "udev-device-get-action", 1, 0, 0,
            (SCM device),
            "Get action.")
 #define FUNC_NAME s_gudev_device_get_action
 {
-    struct udev_device_data* udd = _scm_to_udev_device_data(device);
-    const char* action = udev_device_get_action(udd->udev_device);
-    return scm_from_locale_string(action);
+    return _get_string_property(device, udev_device_get_action);
 }
 #undef FUNC_NAME
 
@@ -21,9 +33,7 @@ SCM_DEFINE(gudev_device_get_sysname,
            "Get sysname.")
 #define FUNC_NAME s_gudev_device_get_sysname
 {
-    struct udev_device_data* udd = _scm_to_udev_device_data(device);
-    const char* sysname = udev_device_get_sysname(udd->udev_device);
-    return scm_from_locale_string(sysname);
+    return _get_string_property(device, udev_device_get_sysname);
 }
 #undef FUNC_NAME
 
@@ -33,9 +43,7 @@ SCM_DEFINE(gudev_device_get_devpath,
            "Get devpath.")
 #define FUNC_NAME s_gudev_device_get_devpath
 {
-    struct udev_device_data* udd = _scm_to_udev_device_data(device);
-    const char* devpath = udev_device_get_devpath(udd->udev_device);
-    return scm_from_locale_string(devpath);
+    return _get_string_property(device, udev_device_get_devpath);
 }
 #undef FUNC_NAME
 
@@ -45,9 +53,7 @@ SCM_DEFINE(gudev_device_get_devnode,
            "Get devnode.")
 #define FUNC_NAME s_gudev_device_get_devnode
 {
-    struct udev_device_data* udd = _scm_to_udev_device_data(device);
-    const char* devnode = udev_device_get_devnode(udd->udev_device);
-    return scm_from_locale_string(devnode);
+    return _get_string_property(device, udev_device_get_devnode);
 }
 #undef FUNC_NAME
 
@@ -57,12 +63,11 @@ SCM_DEFINE(gudev_device_get_devtype,
            "Get the device type.")
 #define FUNC_NAME s_gudev_device_get_devtype
 {
-    struct udev_device_data* udd = _scm_to_udev_device_data(device);
-    const char* devtype = udev_device_get_devtype(udd->udev_device);
-    return scm_from_locale_string(devtype);
+    return _get_string_property(device, udev_device_get_devtype);
 }
 #undef FUNC_NAME
 
+
 void init_udev_device_func()
 {
 #include "udev-device-func.x"
