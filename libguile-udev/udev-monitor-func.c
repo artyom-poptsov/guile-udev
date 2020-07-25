@@ -6,6 +6,7 @@
 
 #include "udev-monitor-type.h"
 #include "udev-device-type.h"
+#include "error.h"
 
 SCM_DEFINE(gudev_add_filter_x,
            "udev-monitor-add-filter!", 3, 0, 0,
@@ -33,10 +34,8 @@ SCM_DEFINE(gudev_add_filter_x,
                                                              c_subsystem,
                                                              c_devtype);
     if (result < 0) {
-        scm_error(scm_from_locale_string("mstd"), FUNC_NAME,
-                  "Could not add a filter.",
-                  scm_list_3(udev_monitor, subsystem, devtype),
-                  SCM_BOOL_F);
+         guile_udev_error1(FUNC_NAME, "Could not add a filter.",
+                           udev_monitor);
     }
 
     scm_dynwind_end();
@@ -58,10 +57,9 @@ SCM_DEFINE(gudev_monitor_set_callback_x,
     pthread_mutex_lock(&umd->lock);
     if (umd->is_scanning) {
         pthread_mutex_unlock(&umd->lock);
-        scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                  "Stop the monitor before setting the callback.",
-                  udev_monitor,
-                  SCM_BOOL_F);
+        guile_udev_error1(FUNC_NAME,
+                          "Stop the monitor before setting the callback.",
+                          udev_monitor);
     }
 
     umd->scanner_callback = callback;
@@ -89,18 +87,14 @@ void* udev_monitor_scanner(void* arg)
 
     result = udev_monitor_enable_receiving(umd->udev_monitor);
     if (result < 0) {
-        scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                  "Could not enable event receiving.",
-                  udev_monitor,
-                  SCM_BOOL_F);
+         guile_udev_error1(FUNC_NAME, "Could not enable event receiving.",
+                           udev_monitor);
     }
 
     monitor_fd = udev_monitor_get_fd(umd->udev_monitor);
     if (monitor_fd < 0) {
-        scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                  "Could not udev monitor file descriptor.",
-                  udev_monitor,
-                  SCM_BOOL_F);
+         guile_udev_error1(FUNC_NAME, "Could not udev monitor file descriptor.",
+                           udev_monitor);
     }
 
     timeout.tv_sec = 10;
@@ -120,10 +114,8 @@ void* udev_monitor_scanner(void* arg)
         FD_SET(monitor_fd, &fd_set);
         select_result = select(monitor_fd + 1, &fd_set, NULL, NULL, &timeout);
         if (select_result == -1) {
-            scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                      "Error during 'select' call.",
-                      udev_monitor,
-                      SCM_BOOL_F);
+             guile_udev_error1(FUNC_NAME, "Error during 'select' call.",
+                               udev_monitor);
         }
         if (FD_ISSET(monitor_fd, &fd_set)) {
             printf("d0\n");
@@ -154,10 +146,8 @@ SCM_DEFINE(gudev_monitor_start_scanning_x,
     pthread_mutex_lock(&umd->lock);
     if (umd->is_scanning) {
         pthread_mutex_unlock(&umd->lock);
-        scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                  "The monitor is already running.",
-                  udev_monitor,
-                  SCM_BOOL_F);
+        guile_udev_error1(FUNC_NAME, "The monitor is already running.",
+                          udev_monitor);
     }
     umd->is_scanning = 1;
 
@@ -180,10 +170,8 @@ SCM_DEFINE(gudev_monitor_stop_scanning_x,
     pthread_mutex_lock(&umd->lock);
     if (! umd->is_scanning) {
         pthread_mutex_unlock(&umd->lock);
-        scm_error(scm_from_locale_string("guile-udev-error"), FUNC_NAME,
-                  "The monitor is already stopped.",
-                  udev_monitor,
-                  SCM_BOOL_F);
+        guile_udev_error1(FUNC_NAME, "The monitor is already stopped.",
+                          udev_monitor);
     }
     umd->is_scanning = 0;
 

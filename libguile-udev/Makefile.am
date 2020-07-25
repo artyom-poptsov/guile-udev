@@ -20,6 +20,8 @@ include $(top_srcdir)/am/snarf
 lib_LTLIBRARIES = libguile-udev.la
 
 libguile_udev_la_SOURCES = \
+	error.c			\
+	error.h			\
 	udev-device-func.c	\
 	udev-device-main.c	\
 	udev-device-type.c	\
