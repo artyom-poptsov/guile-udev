@@ -16,7 +16,6 @@
 	 (udev-monitor (make-udev-monitor udev)))
     (udev-monitor-add-filter! udev-monitor "usb" "usb_device")
     (udev-monitor-set-callback! udev-monitor callback)
-    (sleep 1)
     (udev-monitor-start-scanning! udev-monitor)
     (while #t
-	   (sleep 1))))
+      (sleep 1))))
