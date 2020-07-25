@@ -5,6 +5,7 @@
 	    udev-device-get-sysname
 	    udev-device-get-devpath
 	    udev-device-get-devnode
-	    udev-device-get-devtype))
+	    udev-device-get-devtype
+            udev-device-get-driver))
 
 (load-extension "libguile-udev" "init_udev_device")

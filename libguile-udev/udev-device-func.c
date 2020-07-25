@@ -67,6 +67,16 @@ SCM_DEFINE(gudev_device_get_devtype,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_device_get_driver,
+           "udev-device-get-driver", 1, 0, 0,
+           (SCM device),
+           "Get the device driver.")
+#define FUNC_NAME s_gudev_device_get_driver
+{
+     return _get_string_property(device, udev_device_get_driver);
+}
+#undef FUNC_NAME
+
 
 void init_udev_device_func()
 {
