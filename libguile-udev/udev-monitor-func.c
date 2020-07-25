@@ -181,6 +181,19 @@ SCM_DEFINE(gudev_monitor_stop_scanning_x,
 
     return SCM_UNDEFINED;
 }
+#undef FUNC_NAME
+
+SCM_DEFINE(gudev_monitor_get_udev,
+           "udev-monitor-get-udev", 1, 0, 0,
+           (SCM udev_monitor),
+           "Get the parent udev instance.")
+#define FUNC_NAME s_gudev_monitor_get_udev
+{
+     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     return umd->udev;
+}
+#undef FUNC_NAME
+
 void init_udev_monitor_func()
 {
 #include "udev-monitor-func.x"
