@@ -11,3 +11,10 @@ Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to u
 
 * Dependencies
   - libudev-dev
+* Installation
+#+BEGIN_EXAMPLE
+$ autoreconf -vif
+$ ./configure
+$ make
+$ make install
+#+END_EXAMPLE
