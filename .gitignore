@@ -1,0 +1,4 @@
+*.x
+libguile-udev.so*
+Makefile
+Makefile.in

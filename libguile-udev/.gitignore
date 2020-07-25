@@ -1,0 +1,13 @@
+# -*- shell-script -*-
+
+# Object files and libraries
+.deps
+.libs
+*.o
+*.lo
+*.la
+
+config.h
+config.h.in
+
+stamp-h1
