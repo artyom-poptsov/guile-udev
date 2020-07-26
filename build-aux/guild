@@ -1,6 +1,6 @@
 #!/bin/sh
 # -*- scheme -*-
-exec ${GUILE:-/usr/bin/guile-2.2} $GUILE_FLAGS -e '(@@ (guild) main)' -s "$0" "$@"
+exec $(which guile) $GUILE_FLAGS -e '(@@ (guild) main)' -s "$0" "$@"
 !#
 
 ;;;; guild --- running scripts bundled with Guile
