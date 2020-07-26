@@ -73,8 +73,13 @@ GUILE_PROGS
 GUILE_FLAGS
 GUILE_SITE_DIR
 
+AC_SUBST([top_srcdir])
+
 if test "x$GUILD" = "x"; then
    GUILD=`which guild`
+   if test "x$GUILD" = "x"; then
+      GUILD=`pwd`/build-aux/guild
+   fi
    AC_SUBST(GUILD)
 fi
 
