@@ -10,7 +10,10 @@ Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to u
   Public License.
 
 * Dependencies
-  - libudev-dev
+  - libudev
+** Build-time dependencies
+   - libudev-dev
+   - gettext
 * Installation
 #+BEGIN_EXAMPLE
 $ autoreconf -vif
