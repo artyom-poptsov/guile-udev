@@ -1,0 +1,233 @@
+\input texinfo
+@c -*-texinfo-*-
+@c %**start of header
+@setfilename guile-udev.info
+@documentencoding UTF-8
+@settitle Guile-Udev Reference Manual
+@c %**end of header
+@include version.texi
+
+@copying
+This manual documents Guile-Udev version @value{VERSION}.
+
+Copyright (C) 2020 Artyom V. Poptsov @email{poptsov.artyom@@gmail.com}
+
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3 or
+any later version published by the Free Software Foundation; with no
+Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.  A
+copy of the license is included in the section entitled ``GNU Free
+Documentation License.''
+@end copying
+
+@dircategory The Algorithmic Language Scheme
+@direntry
+* Guile-Udev: (guile-udev).  Guile bindings to libudev.
+@end direntry
+
+@setchapternewpage odd
+
+@titlepage
+@sp 10
+
+@title Guile-Udev Reference Manual
+@subtitle For Guile-Udev @value{VERSION}
+
+@author Artyom V. Poptsov
+
+@page
+@vskip 0pt plus 1filll
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@finalout
+@headings double
+
+@ifnottex
+@node Top, Introduction, (dir), (dir)
+@top The Guile-Udev Reference Manual
+
+@insertcopying
+@sp 1
+@end ifnottex
+
+@menu
+* Introduction::
+* Installation::
+* API Reference::
+
+Appendices
+
+* GNU Free Documentation License::  The license of this manual.
+
+@end menu
+
+@contents
+
+@node Introduction
+@chapter Introduction
+
+Guile-Udev is a module that provides bindings to
+@url{https://www.freedesktop.org/software/systemd/man/libudev.html, libudev}
+for programs written in @url{https://www.gnu.org/software/guile/, GNU Guile}.
+
+@node Installation
+@chapter Installation
+
+Guile-Udev sources are available from GitHub at
+@url{https://github.com/artyom-poptsov/guile-udev/}. This section describes
+requirements of Guile-Udev and installation process.
+
+Guile-Udev depends on the following packages:
+
+@itemize
+@item @url{https://www.gnu.org/software/guile/, GNU Guile}, 2.0
+@item libudev
+@end itemize
+
+Get the sources of Guile-Udev from GitHub using Git (a good introduction to Git
+is @url{https://git-scm.com/book/en/v2, Pro Git} book, which is available
+online):
+
+@example
+$ git clone git@@github.com:artyom-poptsov/guile-udev.git
+@end example
+
+Configure the sources:
+
+@example
+$ cd guile-udev/
+$ autoreconf -vif
+$ ./configure
+@end example
+
+Build and install the library:
+
+@example
+$ make
+$ make install
+@end example
+
+For a basic explanation of the installation of the package, see the
+@file{INSTALL} file.
+
+@strong{important} You probably want to call @command{configure} with
+the @option{--with-guilesitedir} option so that this package is
+installed in Guile's default path.  But, if you don't know where your
+Guile site directory is, run @command{configure} without the option,
+and it will give you a suggestion.
+
+@node API Reference
+@chapter API Reference
+
+@section Udev
+
+These procedures are available from the module @code{(udev udev)}.
+
+@deffn {Scheme Procedure} make-udev
+Make and return an udev object.
+@end deffn
+
+@deffn {Scheme Procedure} udev? x
+Check if @var{x} is an udev object. Return @code{#t} if it is, or @code{#f}
+otherwise.
+@end deffn
+
+@section Monitor
+
+These procedures are available from the module @code{(udev monitor)}.
+
+@deffn {Scheme Procedure} make-udev-monitor udev
+Return a new udev monitor object for the given @var{udev} instance.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor? x
+Check if @var{x} is an udev-monitor object. Return @code{#t} if it is, or
+@code{#f} otherwise.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor-add-filter! udev-monitor sybsystem devtype
+Add a new filter for the events on @var{udev-monitor} that will trigger the
+provided callback. This procedure must be called before starting the scanning.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor-set-callback! udev-monitor callback
+Set the @var{udev-monitor} callback that will be called on each event that
+pass the given filter.
+
+The callback procedure will receive as the 1nd parameter an udev device
+instance.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor-start-scanning! udev-monitor
+Start the event scanning for the given @var{udev-monitor}.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor-stop-scanning! udev-monitor
+Stop the event scanning for the given @var{udev-monitor}.
+@end deffn
+
+@deffn {Scheme Procedure} udev-monitor-get-udev udev-monitor
+Return the parent udev object for an @var{udev-monitor}.
+@end deffn
+
+@section Device
+
+These procedures are available from the module @code{(udev monitor)}.
+
+@deffn {Scheme Procedure} udev-device? x
+Check if @var{x} is an udev-device object. Return @code{#t} if it is, or
+@code{#f} otherwise.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-action udev-device
+Get the detected action for the @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-sysname udev-device
+Get the @var{udev-device} system name as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-devpath udev-device
+Get the device path of @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-devnode udev-device
+Get the device node of @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-devtype udev-device
+Get the device type of @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-driver udev-device
+Get the device driver of @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-udev udev-device
+Get the parent udev object of @var{udev-device}.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-property-value udev-device property
+Get the value of a given @var{property} for @var{udev-device} as a string.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-links udev-device
+Get an alist of the @var{udev-device} links.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-properties udev-device
+Get an alist of the @var{udev-device} properties.
+@end deffn
+
+@deffn {Scheme Procedure} udev-device-get-tags udev-device
+Get an alist of the @var{udev-device} tags.
+@end deffn
+
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
+
+@include fdl.texi
+
+@bye

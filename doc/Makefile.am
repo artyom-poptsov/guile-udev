@@ -1,9 +1,9 @@
-## Config file for GNU Automake. 
+## Makefile.am -- Config file for GNU Automake.
 ##
-## Copyright (C) 2013, 2014, 2015, 2016 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-Udev.
-##
+## 
 ## Guile-Udev is free software: you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
 ## published by the Free Software Foundation, either version 3 of the
@@ -17,29 +17,10 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
-ACLOCAL_AMFLAGS = -I m4 --install
+info_TEXINFOS = guile-udev.texi
 
-SUBDIRS = am libguile-udev build-aux m4 modules doc
-
-EXTRA_DIST =					\
-	build-aux/config.rpath			\
-	build-aux/compile			\
-	.dir-locals.el				\
-	TODO
-
-gen-ChangeLog:
-	if test -d .git; then				\
-	  $(top_srcdir)/build-aux/gitlog-to-changelog	\
-	    194fd7d..HEAD > $(distdir)/cl-t;		\
-	  rm -f $(distdir)/ChangeLog;			\
-	  mv $(distdir)/cl-t $(distdir)/ChangeLog;	\
-	fi
-
-dist-hook: gen-ChangeLog
-.PHONY: gen-ChangeLog
-
-clean-go:
-	@cd modules; make clean-go
-.PHONY: clean-go
+guile_dsv_TEXINFOS = \
+	guile-udev.texi	\
+	fdl.texi
 
 ## Makefile.am ends here
