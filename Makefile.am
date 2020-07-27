@@ -24,8 +24,7 @@ SUBDIRS = am libguile-udev build-aux m4 modules doc
 EXTRA_DIST =					\
 	build-aux/config.rpath			\
 	build-aux/compile			\
-	.dir-locals.el				\
-	TODO
+	.dir-locals.el
 
 gen-ChangeLog:
 	if test -d .git; then				\
