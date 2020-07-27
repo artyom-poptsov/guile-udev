@@ -118,13 +118,9 @@ void* udev_monitor_scanner(void* arg)
                                udev_monitor);
         }
         if (FD_ISSET(monitor_fd, &fd_set)) {
-            printf("d0\n");
             dev = udev_monitor_receive_device(umd->udev_monitor);
-            printf("d1\n");
             device = _scm_from_udev_device(umd->udev, dev);
-            printf("d2\n");
             scm_call_1(callback, device);
-            printf("d3\n");
             scm_remember_upto_here_1(device);
         }
     }
