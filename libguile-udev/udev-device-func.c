@@ -88,6 +88,28 @@ SCM_DEFINE(gudev_device_get_udev,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_device_get_property_value,
+           "udev-device-get-property-value", 2, 0, 0,
+           (SCM device, SCM property),
+           "Get the value of given PROPERTY for the DEVICE.")
+#define FUNC_NAME s_gudev_device_get_property
+{
+     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     char* c_property = NULL;
+
+     scm_dynwind_begin(0);
+     c_property = scm_to_locale_string(property);
+     scm_dynwind_free(c_property);
+
+     const char* value = udev_device_get_property_value(udd->udev_device,
+                                                        c_property);
+
+     scm_dynwind_end();
+
+     return scm_from_locale_string(value);
+}
+#undef FUNC_NAME
+
 
 void init_udev_device_func()
 {
