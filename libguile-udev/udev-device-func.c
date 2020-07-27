@@ -110,20 +110,13 @@ SCM_DEFINE(gudev_device_get_property_value,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_links,
-           "udev-device-get-links", 1, 0, 0,
-           (SCM device),
-           "Get device links.")
-#define FUNC_NAME s_gudev_device_get_links
+/**
+ * Convert an Udev list to a Scheme alist.
+ */
+SCM _scm_alist_from_udev_list(struct udev_list_entry* entry)
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
-     struct udev_list_entry* entry = NULL;
-
      SCM alist = scm_make_list(scm_from_int(0), SCM_UNDEFINED);
-     for (entry = udev_device_get_devlinks_list_entry(udd->udev_device);
-          entry != NULL;
-          entry = udev_list_entry_get_next(entry)) {
-
+     for (; entry != NULL; entry = udev_list_entry_get_next(entry)) {
           const char* name  = udev_list_entry_get_name(entry);
           const char* value = udev_list_entry_get_value(entry);
 
@@ -131,8 +124,19 @@ SCM_DEFINE(gudev_device_get_links,
                             scm_from_locale_string(value),
                             alist);
      }
-
      return alist;
+}
+
+SCM_DEFINE(gudev_device_get_links,
+           "udev-device-get-links", 1, 0, 0,
+           (SCM device),
+           "Get device links.")
+#define FUNC_NAME s_gudev_device_get_links
+{
+     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     struct udev_list_entry* entry
+          = udev_device_get_devlinks_list_entry(udd->udev_device);
+     return _scm_alist_from_udev_list(entry);
 }
 #undef FUNC_NAME
 
