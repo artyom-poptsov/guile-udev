@@ -127,9 +127,9 @@ SCM_DEFINE(gudev_device_get_links,
           const char* name  = udev_list_entry_get_name(entry);
           const char* value = udev_list_entry_get_value(entry);
 
-          scm_acons(scm_from_locale_string(name),
-                    scm_from_locale_string(value),
-                    alist);
+          alist = scm_acons(scm_from_locale_string(name),
+                            scm_from_locale_string(value),
+                            alist);
      }
 
      return alist;
