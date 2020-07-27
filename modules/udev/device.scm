@@ -9,6 +9,7 @@
             udev-device-get-driver
             udev-device-get-udev
             udev-device-get-property-value
-            udev-device-get-links))
+            udev-device-get-links
+            udev-device-get-properties))
 
 (load-extension "libguile-udev" "init_udev_device")

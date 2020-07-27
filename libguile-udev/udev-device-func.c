@@ -140,6 +140,19 @@ SCM_DEFINE(gudev_device_get_links,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_device_get_properties,
+           "udev-device-get-properties", 1, 0, 0,
+           (SCM device),
+           "Get device properties as an AList.")
+#define FUNC_NAME s_gudev_device_get_properties
+{
+     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     struct udev_list_entry* entry
+          = udev_device_get_properties_list_entry(udd->udev_device);
+     return _scm_alist_from_udev_list(entry);
+}
+#undef FUNC_NAME
+
 
 void init_udev_device_func()
 {
