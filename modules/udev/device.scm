@@ -10,6 +10,7 @@
             udev-device-get-udev
             udev-device-get-property-value
             udev-device-get-links
-            udev-device-get-properties))
+            udev-device-get-properties
+            udev-device-get-tags))
 
 (load-extension "libguile-udev" "init_udev_device")
