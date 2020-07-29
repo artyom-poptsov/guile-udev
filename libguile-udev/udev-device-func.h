@@ -1,4 +1,4 @@
-/* udev-device-main.c -- Udev device type initialization.
+/* udev-device-func.h -- Udev device procedures.
  *
  * Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
  *
@@ -18,11 +18,9 @@
  * with Guile-Udev. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "udev-device-type.h"
-#include "udev-device-func.h"
+#ifndef UDEV_DEVICE_FUNC_H
+#define UDEV_DEVICE_FUNC_H
 
-void init_udev_device()
-{
-    init_udev_device_type();
-    init_udev_device_func();
-}
+void init_udev_device_func();
+
+#endif  /* ifndef UDEV_DEVICE_FUNC_H */
