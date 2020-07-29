@@ -44,6 +44,24 @@ SCM_DEFINE(gudev_add_filter_x,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_monitor_remove_filters_x,
+           "udev-monitor-remove-filters!", 1, 0, 0,
+           (SCM udev_monitor),
+           "Remove all the filters from a monitor.")
+#define FUNC_NAME s_gudev_monitor_remove_filters_x
+{
+     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     int result = udev_monitor_filter_remove(umd->udev_monitor);
+     if (result < 0) {
+          guile_udev_error1(FUNC_NAME,
+                            "Could not remove filters from the monitor.",
+                            udev_monitor);
+     }
+
+     return SCM_UNDEFINED;
+}
+#undef FUNC_NAME
+
 SCM_DEFINE(gudev_monitor_set_callback_x,
            "udev-monitor-set-callback!", 2, 0, 0,
            (SCM udev_monitor, SCM callback),

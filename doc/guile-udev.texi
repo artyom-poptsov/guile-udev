@@ -152,6 +152,11 @@ Add a new filter for the events on @var{udev-monitor} that will trigger the
 provided callback. This procedure must be called before starting the scanning.
 @end deffn
 
+@deffn {Scheme Procedure} udev-monitor-remove-filters! udev-monitor
+Remove all the filters that was set for @var{udev-monitor}. Throws
+@code{guile-udev-error} on errors.
+@end deffn
+
 @deffn {Scheme Procedure} udev-monitor-set-callback! udev-monitor callback
 Set the @var{udev-monitor} callback that will be called on each event that
 pass the given filter.
