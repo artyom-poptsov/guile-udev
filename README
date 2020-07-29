@@ -21,3 +21,9 @@ $ ./configure
 $ make
 $ make install
 #+END_EXAMPLE
+
+* Usage
+Please see the documentation in Info format for API documentation and usage
+examples -- you can open it by typing =info guile-udev= in the shell, or using
+=C-h i m guile-udev RET= combo in Emacs.  Also take a look on examples in the
+=examples= directory.
