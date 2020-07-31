@@ -12,7 +12,7 @@ Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [
    Public License.
 
 ** Requirements
-   - libudev
+   - libudev >= 239
 *** Build-time dependencies
     - libudev-dev
     - gettext
