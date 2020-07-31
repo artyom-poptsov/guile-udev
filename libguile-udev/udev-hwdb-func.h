@@ -21,6 +21,6 @@
 #ifndef __UDEV_HWDB_FUNC_H__
 #define __UDEV_HWDB_FUNC_H__
 
-void init_udev_device_func();
+void init_udev_hwdb_func();
 
 #endif  /* ifndef __UDEV_HWDB_FUNC_H__ */
