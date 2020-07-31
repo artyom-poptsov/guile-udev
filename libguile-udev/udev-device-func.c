@@ -22,6 +22,7 @@
 #include <libudev.h>
 
 #include "udev-device-type.h"
+#include "common.h"
 
 /**
  * Get a string device property from an SCM device object.
@@ -129,23 +130,6 @@ SCM_DEFINE(gudev_device_get_property_value,
      return scm_from_locale_string(value);
 }
 #undef FUNC_NAME
-
-/**
- * Convert an Udev list to a Scheme alist.
- */
-SCM _scm_alist_from_udev_list(struct udev_list_entry* entry)
-{
-     SCM alist = scm_make_list(scm_from_int(0), SCM_UNDEFINED);
-     for (; entry != NULL; entry = udev_list_entry_get_next(entry)) {
-          const char* name  = udev_list_entry_get_name(entry);
-          const char* value = udev_list_entry_get_value(entry);
-
-          alist = scm_acons(scm_from_locale_string(name),
-                            scm_from_locale_string(value),
-                            alist);
-     }
-     return alist;
-}
 
 SCM_DEFINE(gudev_device_get_links,
            "udev-device-get-links", 1, 0, 0,
