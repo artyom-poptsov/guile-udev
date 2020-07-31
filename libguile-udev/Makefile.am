@@ -65,7 +65,7 @@ libguile_udev_la_LDFLAGS = -module -no-undefined $(UDEV_LD_FLAGS)  \
 AM_CFLAGS = $(WARN_CFLAGS)
 AM_CPPFLAGS = -I$(top_srcdir)/libguile-udev -I$(top_builddir)/libguile-udev
 
-snarfcppopts = $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(GUILE_CFLAGS)
+snarfcppopts = $(INCLUDES) $(CPPFLAGS) $(CFLAGS) $(GUILE_CFLAGS) \
 	$(AM_CPPFLAGS)
 
 SUFFIXES = .x
