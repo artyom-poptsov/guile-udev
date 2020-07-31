@@ -20,7 +20,8 @@ include $(top_srcdir)/am/guilec
 SCM_SOURCES = \
 	device.scm		\
 	monitor.scm		\
-	udev.scm
+	udev.scm		\
+	hwdb.scm
 
 pkgguilesitedir = $(guilesitedir)/udev
 
