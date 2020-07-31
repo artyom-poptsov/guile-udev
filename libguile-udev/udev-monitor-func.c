@@ -161,6 +161,7 @@ void* udev_monitor_scanner(void* arg)
             scm_call_1(callback, device);
             scm_remember_upto_here_1(device);
         }
+        usleep(100);
     }
     scm_remember_upto_here_1(callback);
     scm_remember_upto_here_1(udev_monitor);
