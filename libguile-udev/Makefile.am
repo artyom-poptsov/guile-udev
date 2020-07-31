@@ -40,7 +40,9 @@ libguile_udev_la_SOURCES = \
 	udev-type.c		\
 	udev-type.h		\
 	udev-hwdb-type.c	\
-	udev-hwdb-type.h
+	udev-hwdb-type.h	\
+	udev-hwdb-func.c	\
+	udev-hwdb-func.h
 
 BUILT_SOURCES = \
 	udev-device-func.x	\
@@ -49,7 +51,8 @@ BUILT_SOURCES = \
 	udev-monitor-func.x	\
 	udev-monitor-type.x	\
 	udev-type.x		\
-	udev-hwdb-type.x
+	udev-hwdb-type.x	\
+	udev-hwdb-func.x
 
 libguile_udev_la_CPPFLAGS = $(CFLAGS) $(GUILE_CFLAGS)
 
