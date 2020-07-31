@@ -17,9 +17,11 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
+AUTOMAKE_OPTIONS = gnu
+
 info_TEXINFOS = guile-udev.texi
 
-guile_dsv_TEXINFOS = \
+guile_udev_TEXINFOS = \
 	guile-udev.texi	\
 	fdl.texi
 
