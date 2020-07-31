@@ -230,6 +230,31 @@ Get an alist of the @var{udev-device} properties.
 Get an alist of the @var{udev-device} tags.
 @end deffn
 
+@section Hardware Database
+
+Udev hardware database (HWDB) allows to make queries to the database using
+modalias strings.
+
+The procedures are defined in @code{(udev hwdb)} module.
+
+@deffn {Scheme Procedure} make-udev-hwdb
+Return a new udev hardware database instance.
+@end deffn
+
+@deffn {Scheme Procedure} udev-hwdb-lookup hwdb modalias
+Lookup a device matching @var{modalias} in the hardware database using the
+given @var{hwdb} instance.
+
+Usage example:
+@lisp
+(let* ((udev (make-udev))
+       (hwdb (make-udev-hwdb udev)))
+  (display (udev-hwdb-lookup hwdb "pci:v00008086d00001C2D*"))
+  (newline))
+@end lisp
+
+@end deffn
+
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
 
