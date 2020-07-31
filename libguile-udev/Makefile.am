@@ -42,7 +42,8 @@ libguile_udev_la_SOURCES = \
 	udev-hwdb-type.c	\
 	udev-hwdb-type.h	\
 	udev-hwdb-func.c	\
-	udev-hwdb-func.h
+	udev-hwdb-func.h	\
+	udev-hwdb-main.c
 
 BUILT_SOURCES = \
 	udev-device-func.x	\
