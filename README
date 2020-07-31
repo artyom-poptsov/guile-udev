@@ -2,7 +2,7 @@
 
 * Guile-Udev
 
-Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to udev.
+Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [[https://en.wikipedia.org/wiki/Udev][libudev]].
 
 ** License
    Guile-Udev is free software: you can redistribute it and/or modify it under
