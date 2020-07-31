@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-udev], [0.0.0], [poptsov.artyom@gmail.com],
+AC_INIT([Guile-Udev], [0.1.0], [poptsov.artyom@gmail.com],
                      [guile-udev],
                      [https://github.com/artyom-poptsov/guile-udev])
 
@@ -96,7 +96,7 @@ if test "x$guilesitedir" = "x"; then
 fi
 AC_SUBST([guilesitedir])
 
-LIBGUILE_UDEV_INTERFACE="0:0:0"
+LIBGUILE_UDEV_INTERFACE="1:0:0"
 AC_SUBST(LIBGUILE_UDEV_INTERFACE)
 
 GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
