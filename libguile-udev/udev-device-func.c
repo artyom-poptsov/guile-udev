@@ -22,6 +22,7 @@
 #include <libudev.h>
 
 #include "udev-device-type.h"
+#include "udev-device-func.h"
 #include "common.h"
 
 /**

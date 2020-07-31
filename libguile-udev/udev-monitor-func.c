@@ -25,6 +25,7 @@
 #include <pthread.h>
 
 #include "udev-monitor-type.h"
+#include "udev-monitor-func.h"
 #include "udev-device-type.h"
 #include "error.h"
 
