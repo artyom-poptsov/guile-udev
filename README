@@ -1,29 +1,31 @@
 # -*- mode: org; -*-
 
+* Guile-Udev
+
 Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to udev.
 
-* License
-  Guile-Udev is free software: you can redistribute it and/or modify it under
-  the terms of the GNU General Public License as published by the Free
-  Software Foundation, either version 3 of the License, or (at your option)
-  any later version. Please see =COPYING= file for the terms of GNU General
-  Public License.
+** License
+   Guile-Udev is free software: you can redistribute it and/or modify it under
+   the terms of the GNU General Public License as published by the Free
+   Software Foundation, either version 3 of the License, or (at your option)
+   any later version. Please see =COPYING= file for the terms of GNU General
+   Public License.
 
-* Dependencies
-  - libudev
-** Build-time dependencies
-   - libudev-dev
-   - gettext
-* Installation
-#+BEGIN_EXAMPLE
-$ autoreconf -vif
-$ ./configure
-$ make
-$ make install
-#+END_EXAMPLE
+** Requirements
+   - libudev
+*** Build-time dependencies
+    - libudev-dev
+    - gettext
+** Installation
+ #+BEGIN_EXAMPLE
+ $ autoreconf -vif
+ $ ./configure
+ $ make
+ $ make install
+ #+END_EXAMPLE
 
-* Usage
-Please see the documentation in Info format for API documentation and usage
-examples -- you can open it by typing =info guile-udev= in the shell, or using
-=C-h i m guile-udev RET= combo in Emacs.  Also take a look on examples in the
-=examples= directory.
+** Usage
+ Please see the documentation in Info format for API documentation and usage
+ examples -- you can open it by typing =info guile-udev= in the shell, or using
+ =C-h i m guile-udev RET= combo in Emacs.  Also take a look on examples in the
+ =examples= directory.
