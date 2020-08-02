@@ -41,6 +41,11 @@ struct udev_monitor_data {
       */
      int is_scanning;
 
+     /**
+      * @brief timeout -- 'select' timeout for the device monitor.
+      */
+     struct timeval timeout;
+
      pthread_mutex_t lock;
      pthread_t scanner_thread;
 };

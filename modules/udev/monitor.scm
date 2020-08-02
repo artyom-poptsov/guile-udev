@@ -4,6 +4,7 @@
 	    make-udev-monitor
 	    udev-monitor-add-filter!
             udev-monitor-remove-filters!
+            udev-monitor-set-timeout!
 	    udev-monitor-set-callback!
 	    udev-monitor-start-scanning!
 	    udev-monitor-stop-scanning!

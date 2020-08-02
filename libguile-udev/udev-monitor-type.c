@@ -85,9 +85,11 @@ SCM _scm_from_udev_monitor(SCM udev, struct udev_monitor *udev_monitor)
 {
     SCM smob;
     struct udev_monitor_data* umd = _allocate_udev_monitor();
-    umd->udev         = udev;
-    umd->udev_monitor = udev_monitor;
-    umd->is_scanning  = 0;
+    umd->udev             = udev;
+    umd->udev_monitor     = udev_monitor;
+    umd->timeout.tv_sec   = 0;
+    umd->timeout.tv_usec  = 0;
+    umd->is_scanning      = 0;
     umd->scanner_callback = SCM_BOOL_F;
     pthread_mutex_init(&umd->lock, NULL);
 

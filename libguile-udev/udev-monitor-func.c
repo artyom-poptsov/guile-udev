@@ -110,17 +110,53 @@ SCM_DEFINE(gudev_monitor_set_callback_x,
 }
 #undef FUNC_NAME
 
+SCM_DEFINE(gudev_monitor_set_timeout_x,
+           "udev-monitor-set-timeout!", 3, 0, 0,
+           (SCM udev_monitor, SCM seconds, SCM milliseconds),
+           "Set monitor event poll timeout.  \
+Throws 'guile-udev-error' on errors.")
+#define FUNC_NAME s_gudev_monitor_set_timeout_x
+{
+     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     SCM_ASSERT(scm_number_p(seconds),      seconds,      SCM_ARG2, FUNC_NAME);
+     SCM_ASSERT(scm_number_p(milliseconds), milliseconds, SCM_ARG3, FUNC_NAME);
+     long c_seconds      = scm_to_long(seconds);
+     long c_milliseconds = scm_to_long(milliseconds);
+
+     if (c_seconds < 0) {
+          guile_udev_error1(
+               FUNC_NAME,
+               "'Seconds' part of the timeout must be >= 0.",
+               seconds);
+     }
+
+     if (c_milliseconds < 0) {
+          guile_udev_error1(
+               FUNC_NAME,
+               "'Milliseconds' part of the timeout must be >= 0.",
+               milliseconds);
+     }
+
+     umd->timeout.tv_sec  = c_seconds;
+     umd->timeout.tv_usec = c_milliseconds;
+
+     scm_remember_upto_here_1(udev_monitor);
+
+     return SCM_UNDEFINED;
+}
+#undef FUNC_NAME
+
 void* udev_monitor_scanner(void* arg)
 #define FUNC_NAME "udev_monitor_scanner"
 {
     SCM udev_monitor = (SCM) arg;
     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
     fd_set fd_set;
-    struct timeval timeout;
     int result;
     int select_result;
     int monitor_fd;
     struct udev_device *dev;
+    struct timeval timeout = umd->timeout;
 
     scm_init_guile();
 
@@ -135,9 +171,6 @@ void* udev_monitor_scanner(void* arg)
          guile_udev_error1(FUNC_NAME, "Could not udev monitor file descriptor.",
                            udev_monitor);
     }
-
-    timeout.tv_sec = 10;
-    timeout.tv_usec = 0;
 
     SCM callback = umd->scanner_callback;
     SCM device;
@@ -162,7 +195,6 @@ void* udev_monitor_scanner(void* arg)
             scm_call_1(callback, device);
             scm_remember_upto_here_1(device);
         }
-        usleep(100);
     }
     scm_remember_upto_here_1(callback);
     scm_remember_upto_here_1(udev_monitor);
