@@ -11,6 +11,10 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ** (udev monitor): Allow to specify 'select' timeout
    The module now provides 'udev-monitor-set-timeout!' procedure that allows
    to specify timeout for calls to 'select'.
+** (udev monitor): New procedure 'make-udev-monitor'
+   The module now provides two procedures for creating udev monitors:
+   low-level '%make-udev-monitor' and high-level 'make-udev-monitor' procedure
+   that allows to specify monitor parameters by means of keywords.
 
  
 * Changes in version 0.1.0 (2020-07-31)

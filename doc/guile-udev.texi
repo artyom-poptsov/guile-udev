@@ -145,8 +145,59 @@ default.
 
 These procedures are available from the module @code{(udev monitor)}.
 
-@deffn {Scheme Procedure} make-udev-monitor udev
+@deffn {Scheme Procedure} %make-udev-monitor udev
 Return a new udev monitor object for the given @var{udev} instance.
+@end deffn
+
+@deffn {Scheme Procedure} make-udev-monitor udev [keywords]
+High-level procedure that creates an @var{udev} monitor object with the
+parameters specified by keywords described below.
+
+@table @samp
+@item callback
+Callback to be called when an udev event occurs.
+
+Expected type: procedure
+
+Default value: @code{(const #f)}
+@item filter
+Udev event filter.
+
+Expected type: a list with two elements: the 1st element is sybsystem name,
+the 2nd element is device type
+
+Default value: @code{#f}
+
+Example:
+@lisp
+(make-udev-monitor udev #:filter (list "usb" "usb_device"))
+@end lisp
+@item timeout-sec
+Timeout for 'select' call in the event listener.  This part of the timeout is
+specified in seconds.
+
+Expected type: Non-negative integer.
+
+Default value: 0
+
+Example:
+@lisp
+(make-udev-monitor udev #:timeout-sec 1)
+@end lisp
+@item timeout-usec
+Timeout for 'select' call in the event listener.  This part of the timeout is
+specified in milliseconds.
+
+Expected type: Non-negative integer.
+
+Default value: 0
+
+Example:
+@lisp
+(make-udev-monitor udev #:timeout-usec 1)
+@end lisp
+@end table
+
 @end deffn
 
 @deffn {Scheme Procedure} udev-monitor? x

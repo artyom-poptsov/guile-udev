@@ -13,9 +13,12 @@
 
 (define (main args)
   (let* ((udev         (make-udev))
-         (udev-monitor (make-udev-monitor udev)))
-    (udev-monitor-add-filter! udev-monitor "usb" "usb_device")
-    (udev-monitor-set-callback! udev-monitor callback)
+         (udev-monitor (make-udev-monitor udev
+                                          #:timeout-sec  0
+                                          #:timeout-usec 200
+                                          #:callback     callback
+                                          #:filter       (list "usb"
+                                                               "usb_device"))))
     (udev-monitor-start-scanning! udev-monitor)
     (while #t
       (sleep 1))))

@@ -110,7 +110,7 @@ struct udev_monitor_data* _scm_to_udev_monitor_data(SCM x)
 }
 
 SCM_DEFINE(gudev_make_udev_monitor,
-           "make-udev-monitor", 1, 0, 0,
+           "%make-udev-monitor", 1, 0, 0,
            (SCM udev),
            "Make an Udev monitor.")
 {
