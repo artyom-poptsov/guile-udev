@@ -12,11 +12,35 @@ Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [
    Public License.
 
 ** Requirements
+   - guile-2.2 / guile-3.0
    - libudev >= 239
+
 *** Build-time dependencies
+    - guile-2.2-dev / guile-3.0-dev
     - libudev-dev
     - gettext
-** Installation
+    - automake
+    - autoconf
+    - texinfo
+    - pkg-config
+
+** Building and installation
+   On Ubuntu GNU/Linux 20.04 you'll need to install the needed dependencies to
+   be able to build the library with Guile 3.0:
+ #+BEGIN_EXAMPLE
+$ sudo apt install \
+    gcc            \
+    guile-3.0-dev  \
+    libudev-dev    \
+    gettext        \
+    automake       \
+    autoconf       \
+    texinfo        \
+    pkg-config     \
+    libguile-dev
+#+END_EXAMPLE
+
+   To build and install the library, use the following commands:
  #+BEGIN_EXAMPLE
  $ autoreconf -vif
  $ ./configure
