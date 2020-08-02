@@ -156,7 +156,6 @@ void* udev_monitor_scanner(void* arg)
     int select_result;
     int monitor_fd;
     struct udev_device *dev;
-    struct timeval timeout = umd->timeout;
 
     scm_init_guile();
 
@@ -176,6 +175,7 @@ void* udev_monitor_scanner(void* arg)
     SCM device;
 
     while (1) {
+        struct timeval timeout = umd->timeout;
         pthread_mutex_lock(&umd->lock);
         if (! umd->is_scanning) {
             break;
