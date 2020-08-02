@@ -21,7 +21,6 @@
 #include <libguile.h>
 #include <libudev.h>
 #include <unistd.h>             /* usleep */
-#include <stdio.h> // debug
 
 #include <pthread.h>
 
