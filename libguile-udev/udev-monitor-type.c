@@ -30,13 +30,13 @@ scm_t_bits udev_monitor_tag;
 
 static SCM _mark(SCM um)
 {
-    gudev_monitor_t* umd = _scm_to_udev_monitor_data(um);
+    gudev_monitor_t* umd = gudev_monitor_from_scm(um);
     return umd->udev;
 }
 
 static size_t _free(SCM um)
 {
-    gudev_monitor_t* umd = _scm_to_udev_monitor_data(um);
+    gudev_monitor_t* umd = gudev_monitor_from_scm(um);
     scm_gc_unprotect_object(umd->scanner_callback);
     udev_monitor_unref(umd->udev_monitor);
     pthread_mutex_destroy(&umd->lock);
@@ -53,8 +53,8 @@ static int _print(SCM um, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-    gudev_monitor_t* d1 = _scm_to_udev_monitor_data(x1);
-    gudev_monitor_t* d2 = _scm_to_udev_monitor_data(x2);
+    gudev_monitor_t* d1 = gudev_monitor_from_scm(x1);
+    gudev_monitor_t* d2 = gudev_monitor_from_scm(x2);
     if ((! d1) || (! d2)) {
         return SCM_BOOL_F;
     } else if (d1 != d2) {
@@ -83,7 +83,7 @@ gudev_monitor_t* _allocate_udev_monitor()
  * @param udev -- A pointer to an Udev monitor handle.
  * @return A new udev monitor SMOB.
  */
-SCM _scm_from_udev_monitor(SCM udev, struct udev_monitor *udev_monitor)
+SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor)
 {
     SCM smob;
     gudev_monitor_t* umd = _allocate_udev_monitor();
@@ -105,7 +105,7 @@ SCM _scm_from_udev_monitor(SCM udev, struct udev_monitor *udev_monitor)
  * @param x -- Source SCM object.
  * @return A pointer to the Udev data.
  */
-gudev_monitor_t* _scm_to_udev_monitor_data(SCM x)
+gudev_monitor_t* gudev_monitor_from_scm(SCM x)
 {
     scm_assert_smob_type(udev_monitor_tag, x);
     return (gudev_monitor_t *) SCM_SMOB_DATA(x);
@@ -118,7 +118,7 @@ SCM_DEFINE(gudev_make_udev_monitor,
 {
     gudev_t* ud = gudev_from_scm(udev);
     struct udev_monitor* um = udev_monitor_new_from_netlink(ud->udev, "udev");
-    return _scm_from_udev_monitor(udev, um);
+    return gudev_monitor_to_scm(udev, um);
 }
 
 void init_udev_monitor_type()

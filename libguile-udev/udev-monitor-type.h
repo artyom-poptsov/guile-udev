@@ -55,7 +55,7 @@ typedef struct gudev_monitor gudev_monitor_t;
 void init_udev_monitor_type();
 
 gudev_monitor_t* _allocate_udev_monitor();
-gudev_monitor_t* _scm_to_udev_monitor_data(SCM x);
-SCM _scm_from_udev_monitor(SCM udev, struct udev_monitor *udev_monitor);
+gudev_monitor_t* gudev_monitor_from_scm(SCM x);
+SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor);
 
 #endif // UDEV_MONITOR_TYPE_H
