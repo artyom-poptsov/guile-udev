@@ -63,7 +63,7 @@ SCM_DEFINE(gudev_is_udev_monitor_p, "udev-monitor?", 1, 0, 0, (SCM x),
     return scm_from_bool(SCM_SMOB_PREDICATE(udev_monitor_tag, x));
 }
 
-gudev_monitor_t* _allocate_udev_monitor()
+gudev_monitor_t* make_udev_monitor()
 {
     return (gudev_monitor_t *) scm_gc_malloc(
                 sizeof(gudev_monitor_t),
@@ -78,7 +78,7 @@ gudev_monitor_t* _allocate_udev_monitor()
 SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor)
 {
     SCM smob;
-    gudev_monitor_t* umd = _allocate_udev_monitor();
+    gudev_monitor_t* umd = make_udev_monitor();
     umd->udev             = udev;
     umd->udev_monitor     = udev_monitor;
     umd->timeout.tv_sec   = 0;
