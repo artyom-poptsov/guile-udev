@@ -28,7 +28,7 @@
  * @brief The udev_data struct -- Contents of a Guile SMOB object that
  *     that represents an Udev handle.
  */
-struct udev_hwdb_data {
+struct gudev_hwdb {
   struct udev_hwdb* udev_hwdb;
 
   /**
@@ -37,9 +37,11 @@ struct udev_hwdb_data {
   SCM udev;
 };
 
+typedef struct gudev_hwdb gudev_hwdb_t;
+
 void init_udev_hwdb_type();
 
-struct udev_hwdb_data* _scm_to_udev_hwdb_data(SCM x);
+gudev_hwdb_t* _scm_to_udev_hwdb_data(SCM x);
 SCM _scm_from_udev_hwdb(SCM udev, struct udev_hwdb* udev_hwdb);
 
 #endif // UDEV_HWDB_TYPE_H

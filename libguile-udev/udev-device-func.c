@@ -32,7 +32,7 @@ static SCM _get_string_property(SCM device,
                                 const char* (*func)(struct udev_device *))
 #define FUNC_NAME "_get_string_property"
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      const char* result = func(udd->udev_device);
      return scm_from_locale_string(result);
 }
@@ -105,7 +105,7 @@ SCM_DEFINE(gudev_device_get_udev,
            "Get the parent udev object.")
 #define FUNC_NAME s_gudev_device_get_udev
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      return udd->udev;
 }
 #undef FUNC_NAME
@@ -116,7 +116,7 @@ SCM_DEFINE(gudev_device_get_property_value,
            "Get the value of given PROPERTY for the DEVICE.")
 #define FUNC_NAME s_gudev_device_get_property
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      char* c_property = NULL;
 
      scm_dynwind_begin(0);
@@ -138,7 +138,7 @@ SCM_DEFINE(gudev_device_get_links,
            "Get device links.")
 #define FUNC_NAME s_gudev_device_get_links
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      struct udev_list_entry* entry
           = udev_device_get_devlinks_list_entry(udd->udev_device);
      return _scm_alist_from_udev_list(entry);
@@ -151,7 +151,7 @@ SCM_DEFINE(gudev_device_get_properties,
            "Get device properties as an AList.")
 #define FUNC_NAME s_gudev_device_get_properties
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      struct udev_list_entry* entry
           = udev_device_get_properties_list_entry(udd->udev_device);
      return _scm_alist_from_udev_list(entry);
@@ -164,7 +164,7 @@ SCM_DEFINE(gudev_device_get_tags,
            "Get device tags as an AList.")
 #define FUNC_NAME s_gudev_device_get_tags
 {
-     struct udev_device_data* udd = _scm_to_udev_device_data(device);
+     gudev_device_t* udd = _scm_to_udev_device_data(device);
      struct udev_list_entry* entry
           = udev_device_get_tags_list_entry(udd->udev_device);
      return _scm_alist_from_udev_list(entry);

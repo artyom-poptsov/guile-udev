@@ -31,7 +31,7 @@ SCM_DEFINE(gudev_hwdb_lookup,
            "Lookup a matching device in the hardware database.")
 #define FUNC_NAME s_gudev_hwdb_lookup
 {
-     struct udev_hwdb_data* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
+     gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
      struct udev_list_entry* entry = NULL;
      int flags = 0;
      char* c_mod_alias = NULL;

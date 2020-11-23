@@ -25,13 +25,13 @@ scm_t_bits udev_hwdb_tag;
 
 static SCM mark_udev_hwdb(SCM udev_hwdb)
 {
-     struct udev_hwdb_data* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
+     gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
      return uhd->udev;
 }
 
 static size_t free_udev_hwdb(SCM udev_hwdb)
 {
-     struct udev_hwdb_data* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
+     gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
      udev_hwdb_unref(uhd->udev_hwdb);
      return 0;
 }
@@ -46,8 +46,8 @@ static int print_udev_hwdb(SCM udev_hwdb, SCM port, scm_print_state* pstate)
 
 static SCM equalp_udev_hwdb(SCM x1, SCM x2)
 {
-     struct udev_hwdb_data* d1 = _scm_to_udev_hwdb_data(x1);
-     struct udev_hwdb_data* d2 = _scm_to_udev_hwdb_data(x2);
+     gudev_hwdb_t* d1 = _scm_to_udev_hwdb_data(x1);
+     gudev_hwdb_t* d2 = _scm_to_udev_hwdb_data(x2);
      if ((! d1) || (! d2)) {
           return SCM_BOOL_F;
      } else if (d1 != d2) {
@@ -63,10 +63,10 @@ SCM_DEFINE(gudev_is_udev_hwdb_p, "udev-hwdb?", 1, 0, 0, (SCM x),
      return scm_from_bool(SCM_SMOB_PREDICATE(udev_hwdb_tag, x));
 }
 
-struct udev_hwdb_data* _allocate_udev_hwdb()
+gudev_hwdb_t* _allocate_udev_hwdb()
 {
-     return (struct udev_hwdb_data *) scm_gc_malloc(
-          sizeof(struct udev_hwdb_data),
+     return (gudev_hwdb_t *) scm_gc_malloc(
+          sizeof(gudev_hwdb_t),
           "udev-hwdb");
 }
 
@@ -79,17 +79,17 @@ struct udev_hwdb_data* _allocate_udev_hwdb()
 SCM _scm_from_udev_hwdb(SCM udev, struct udev_hwdb *udev_hwdb)
 {
      SCM smob;
-     struct udev_hwdb_data* uhd = _allocate_udev_hwdb();
+     gudev_hwdb_t* uhd = _allocate_udev_hwdb();
      uhd->udev      = udev;
      uhd->udev_hwdb = udev_hwdb;
      SCM_NEWSMOB(smob, udev_hwdb_tag, uhd);
      return smob;
 }
 
-struct udev_hwdb_data* _scm_to_udev_hwdb_data(SCM x)
+gudev_hwdb_t* _scm_to_udev_hwdb_data(SCM x)
 {
      scm_assert_smob_type(udev_hwdb_tag, x);
-     return (struct udev_hwdb_data *) SCM_SMOB_DATA(x);
+     return (gudev_hwdb_t *) SCM_SMOB_DATA(x);
 }
 
 SCM_DEFINE(udev_make_udev_hwdb,
@@ -105,7 +105,7 @@ SCM_DEFINE(udev_make_udev_hwdb,
 void init_udev_hwdb_type()
 {
      udev_hwdb_tag = scm_make_smob_type("udev-hwdb",
-                                        sizeof(struct udev_hwdb_data));
+                                        sizeof(gudev_hwdb_t));
      scm_set_smob_mark(udev_hwdb_tag, mark_udev_hwdb);
      scm_set_smob_free(udev_hwdb_tag, free_udev_hwdb);
      scm_set_smob_print(udev_hwdb_tag, print_udev_hwdb);

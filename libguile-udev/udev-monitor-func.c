@@ -37,7 +37,7 @@ SCM_DEFINE(gudev_add_filter_x,
 {
     char* c_subsystem = NULL;
     char* c_devtype   = NULL;
-    struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+    gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
     int result;
 
     SCM_ASSERT(scm_is_string(subsystem), subsystem, SCM_ARG1, FUNC_NAME);
@@ -71,7 +71,7 @@ SCM_DEFINE(gudev_monitor_remove_filters_x,
            "Remove all the filters from a monitor.")
 #define FUNC_NAME s_gudev_monitor_remove_filters_x
 {
-     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
      int result = udev_monitor_filter_remove(umd->udev_monitor);
      if (result < 0) {
           guile_udev_error1(FUNC_NAME,
@@ -89,7 +89,7 @@ SCM_DEFINE(gudev_monitor_set_callback_x,
            "Set a scanner callback.")
 #define FUNC_NAME s_gudev_monitor_set_callback_x
 {
-    struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+    gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
     SCM_ASSERT(scm_to_bool(scm_procedure_p(callback)), callback,
                SCM_ARG2, FUNC_NAME);
 
@@ -117,7 +117,7 @@ SCM_DEFINE(gudev_monitor_set_timeout_x,
 Throws 'guile-udev-error' on errors.")
 #define FUNC_NAME s_gudev_monitor_set_timeout_x
 {
-     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
      SCM_ASSERT(scm_number_p(seconds),      seconds,      SCM_ARG2, FUNC_NAME);
      SCM_ASSERT(scm_number_p(milliseconds), milliseconds, SCM_ARG3, FUNC_NAME);
      long c_seconds      = scm_to_long(seconds);
@@ -150,7 +150,7 @@ void* udev_monitor_scanner(void* arg)
 #define FUNC_NAME "udev_monitor_scanner"
 {
     SCM udev_monitor = (SCM) arg;
-    struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+    gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
     fd_set fd_set;
     int result;
     int select_result;
@@ -209,7 +209,7 @@ SCM_DEFINE(gudev_monitor_start_scanning_x,
            "Enable event receiving.")
 #define FUNC_NAME s_gudev_monitor_start_scanning_x
 {
-    struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+    gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
 
     pthread_mutex_lock(&umd->lock);
     if (umd->is_scanning) {
@@ -234,7 +234,7 @@ SCM_DEFINE(gudev_monitor_stop_scanning_x,
            "Stop event receiving.")
 #define FUNC_NAME s_gudev_monitor_stop_scanning_x
 {
-    struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+    gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
     pthread_mutex_lock(&umd->lock);
     if (! umd->is_scanning) {
         pthread_mutex_unlock(&umd->lock);
@@ -257,7 +257,7 @@ SCM_DEFINE(gudev_monitor_get_udev,
            "Get the parent udev instance.")
 #define FUNC_NAME s_gudev_monitor_get_udev
 {
-     struct udev_monitor_data* umd = _scm_to_udev_monitor_data(udev_monitor);
+     gudev_monitor_t* umd = _scm_to_udev_monitor_data(udev_monitor);
      return umd->udev;
 }
 #undef FUNC_NAME
