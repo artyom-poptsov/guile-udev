@@ -41,6 +41,7 @@ typedef struct gudev_hwdb gudev_hwdb_t;
 
 void init_udev_hwdb_type();
 
+gudev_hwdb_t* make_gudev_hwdb();
 gudev_hwdb_t* _scm_to_udev_hwdb_data(SCM x);
 SCM _scm_from_udev_hwdb(SCM udev, struct udev_hwdb* udev_hwdb);
 

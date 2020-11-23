@@ -57,7 +57,7 @@ SCM_DEFINE(gudev_is_udev_hwdb_p, "udev-hwdb?", 1, 0, 0, (SCM x),
      return scm_from_bool(SCM_SMOB_PREDICATE(udev_hwdb_tag, x));
 }
 
-gudev_hwdb_t* _allocate_udev_hwdb()
+gudev_hwdb_t* make_gudev_hwdb()
 {
      return (gudev_hwdb_t *) scm_gc_malloc(
           sizeof(gudev_hwdb_t),
@@ -73,7 +73,7 @@ gudev_hwdb_t* _allocate_udev_hwdb()
 SCM _scm_from_udev_hwdb(SCM udev, struct udev_hwdb *udev_hwdb)
 {
      SCM smob;
-     gudev_hwdb_t* uhd = _allocate_udev_hwdb();
+     gudev_hwdb_t* uhd = make_gudev_hwdb();
      uhd->udev      = udev;
      uhd->udev_hwdb = udev_hwdb;
      SCM_NEWSMOB(smob, udev_hwdb_tag, uhd);
