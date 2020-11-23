@@ -70,7 +70,7 @@ gudev_hwdb_t* make_gudev_hwdb()
  * @param udev_hwdb -- A pointer to an Udev HWDB handle.
  * @return A new udev HWDB SMOB.
  */
-SCM _scm_from_udev_hwdb(SCM udev, struct udev_hwdb *udev_hwdb)
+SCM udev_hwdb_to_scm(SCM udev, struct udev_hwdb *udev_hwdb)
 {
      SCM smob;
      gudev_hwdb_t* uhd = make_gudev_hwdb();
@@ -93,7 +93,7 @@ SCM_DEFINE(udev_make_udev_hwdb,
 {
      gudev_t* ud = gudev_from_scm(udev);
      struct udev_hwdb* hwdb = udev_hwdb_new(ud->udev);
-     return _scm_from_udev_hwdb(udev, hwdb);
+     return udev_hwdb_to_scm(udev, hwdb);
 }
 
 void init_udev_hwdb_type()
