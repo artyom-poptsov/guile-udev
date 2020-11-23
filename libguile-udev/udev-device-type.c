@@ -52,7 +52,7 @@ static SCM _equalp(SCM x1, SCM x2)
 }
 
 
-gudev_device_t* _allocate_udev_device()
+gudev_device_t* make_gudev_device()
 {
     return scm_gc_malloc(sizeof(gudev_device_t),
                          "udev-device");
@@ -67,7 +67,7 @@ gudev_device_t* _allocate_udev_device()
 SCM _scm_from_udev_device(SCM udev, struct udev_device *udev_device)
 {
     SCM smob;
-    gudev_device_t* udd = _allocate_udev_device();
+    gudev_device_t* udd = make_gudev_device();
     udd->udev_device = udev_device;
     udd->udev        = udev;
     SCM_NEWSMOB(smob, udev_device_tag, udd);
