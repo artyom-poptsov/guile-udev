@@ -33,7 +33,7 @@ static SCM _mark(SCM udev)
 
 static size_t _free(SCM udev)
 {
-    struct udev_data* ud = _scm_to_udev_data(udev);
+    gudev_t* ud = _scm_to_udev_data(udev);
     udev_unref(ud->udev);
     return 0;
 }
@@ -48,8 +48,8 @@ static int _print(SCM udev, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-    struct udev_data* d1 = _scm_to_udev_data(x1);
-    struct udev_data* d2 = _scm_to_udev_data(x2);
+    gudev_t* d1 = _scm_to_udev_data(x1);
+    gudev_t* d2 = _scm_to_udev_data(x2);
     if ((! d1) || (! d2)) {
         return SCM_BOOL_F;
     } else if (d1 != d2) {
@@ -74,9 +74,8 @@ SCM_DEFINE(gudev_is_udev_p, "udev?", 1, 0, 0, (SCM x),
 SCM _scm_from_udev(struct udev *udev)
 {
     SCM smob;
-    struct udev_data* ud
-            = (struct udev_data *) scm_gc_malloc(sizeof(struct udev_data),
-                                                 "udev");
+    gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof(gudev_t),
+                                            "udev");
     ud->udev = udev;
     SCM_NEWSMOB(smob, udev_tag, ud);
     return smob;
@@ -87,10 +86,10 @@ SCM _scm_from_udev(struct udev *udev)
  * @param x -- Source SCM object.
  * @return A pointer to the Udev data.
  */
-struct udev_data* _scm_to_udev_data(SCM x)
+gudev_t* _scm_to_udev_data(SCM x)
 {
     scm_assert_smob_type(udev_tag, x);
-    return (struct udev_data *) SCM_SMOB_DATA(x);
+    return (gudev_t *) SCM_SMOB_DATA(x);
 }
 
 
@@ -101,9 +100,8 @@ SCM_DEFINE(udev_make_udev,
            "Make an Udev handle.")
 {
     SCM smob;
-    struct udev_data* ud
-            = (struct udev_data *) scm_gc_malloc(sizeof (struct udev_data),
-                                                 "udev");
+    gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof (gudev_t),
+                                            "udev");
     ud->udev = udev_new();
     SCM_NEWSMOB(smob, udev_tag, ud);
     return smob;
@@ -114,7 +112,7 @@ SCM_DEFINE(udev_make_udev,
  */
 void init_udev_type()
 {
-    udev_tag = scm_make_smob_type("udev", sizeof(struct udev_data));
+    udev_tag = scm_make_smob_type("udev", sizeof(gudev_t));
     set_smob_callbacks(udev_tag, _mark, _free, _equalp, _print);
 
 #include "udev-type.x"

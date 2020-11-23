@@ -116,7 +116,7 @@ SCM_DEFINE(gudev_make_udev_monitor,
            (SCM udev),
            "Make an Udev monitor.")
 {
-    struct udev_data* ud = _scm_to_udev_data(udev);
+    gudev_t* ud = _scm_to_udev_data(udev);
     struct udev_monitor* um = udev_monitor_new_from_netlink(ud->udev, "udev");
     return _scm_from_udev_monitor(udev, um);
 }
