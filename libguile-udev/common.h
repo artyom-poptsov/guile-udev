@@ -26,6 +26,18 @@
 
 #include "common.h"
 
+/* GC callbacks. */
+typedef SCM    (*gc_mark_callback_t  )(SCM obj);
+typedef size_t (*gc_free_callback_t  )(SCM obj);
+typedef SCM    (*gc_equalp_callback_t)(SCM x1, SCM x2);
+typedef int    (*gc_print_callback_t )(SCM obj, SCM port, scm_print_state* ps);
+
 SCM _scm_alist_from_udev_list(struct udev_list_entry* entry);
+
+void set_smob_callbacks(scm_t_bits tag,
+                        gc_mark_callback_t   mark_cb,
+                        gc_free_callback_t   free_cb,
+                        gc_equalp_callback_t equalp_cb,
+                        gc_print_callback_t  print_cb);
 
 #endif  /* ifndef __COMMON_H__ */

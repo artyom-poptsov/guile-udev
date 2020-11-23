@@ -18,25 +18,26 @@
  * with Guile-Udev. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "common.h"
 #include "udev-type.h"
 #include "udev-hwdb-type.h"
 
 scm_t_bits udev_hwdb_tag;
 
-static SCM mark_udev_hwdb(SCM udev_hwdb)
+static SCM _mark(SCM udev_hwdb)
 {
      gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
      return uhd->udev;
 }
 
-static size_t free_udev_hwdb(SCM udev_hwdb)
+static size_t _free(SCM udev_hwdb)
 {
      gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
      udev_hwdb_unref(uhd->udev_hwdb);
      return 0;
 }
 
-static int print_udev_hwdb(SCM udev_hwdb, SCM port, scm_print_state* pstate)
+static int _print(SCM udev_hwdb, SCM port, scm_print_state* pstate)
 {
      (void) udev_hwdb;
      (void) pstate;
@@ -44,7 +45,7 @@ static int print_udev_hwdb(SCM udev_hwdb, SCM port, scm_print_state* pstate)
      return 1;
 }
 
-static SCM equalp_udev_hwdb(SCM x1, SCM x2)
+static SCM _equalp(SCM x1, SCM x2)
 {
      gudev_hwdb_t* d1 = _scm_to_udev_hwdb_data(x1);
      gudev_hwdb_t* d2 = _scm_to_udev_hwdb_data(x2);
@@ -57,6 +58,7 @@ static SCM equalp_udev_hwdb(SCM x1, SCM x2)
      }
 }
 
+
 SCM_DEFINE(gudev_is_udev_hwdb_p, "udev-hwdb?", 1, 0, 0, (SCM x),
            "Return #t if X is an udev HWDB object, #f otherwise.")
 {
@@ -106,10 +108,7 @@ void init_udev_hwdb_type()
 {
      udev_hwdb_tag = scm_make_smob_type("udev-hwdb",
                                         sizeof(gudev_hwdb_t));
-     scm_set_smob_mark(udev_hwdb_tag, mark_udev_hwdb);
-     scm_set_smob_free(udev_hwdb_tag, free_udev_hwdb);
-     scm_set_smob_print(udev_hwdb_tag, print_udev_hwdb);
-     scm_set_smob_equalp(udev_hwdb_tag, equalp_udev_hwdb);
+     set_smob_callbacks(udev_hwdb_tag, _mark, _free, _equalp, _print);
 
 #include "udev-hwdb-type.x"
 }

@@ -20,24 +20,25 @@
 
 #include <libguile.h>
 
+#include "common.h"
 #include "udev-device-type.h"
 
 scm_t_bits udev_device_tag;
 
-static SCM mark_udev_device(SCM udev_device)
+static SCM _mark(SCM udev_device)
 {
     gudev_device_t* udd = _scm_to_udev_device_data(udev_device);
     return udd->udev;
 }
 
-static size_t free_udev_device(SCM udev_device)
+static size_t _free(SCM udev_device)
 {
     gudev_device_t* udd = _scm_to_udev_device_data(udev_device);
     udev_device_unref(udd->udev_device);
     return 0;
 }
 
-static int print_udev_device(SCM udev_device, SCM port, scm_print_state* pstate)
+static int _print(SCM udev_device, SCM port, scm_print_state* pstate)
 {
     (void) udev_device;
     (void) pstate;
@@ -45,7 +46,7 @@ static int print_udev_device(SCM udev_device, SCM port, scm_print_state* pstate)
     return 1;
 }
 
-static SCM equalp_udev_device(SCM x1, SCM x2)
+static SCM _equalp(SCM x1, SCM x2)
 {
     gudev_device_t* d1 = _scm_to_udev_device_data(x1);
     gudev_device_t* d2 = _scm_to_udev_device_data(x2);
@@ -58,6 +59,7 @@ static SCM equalp_udev_device(SCM x1, SCM x2)
     }
 }
 
+
 gudev_device_t* _allocate_udev_device()
 {
     return scm_gc_malloc(sizeof(gudev_device_t),
@@ -98,10 +100,7 @@ void init_udev_device_type()
 {
     udev_device_tag = scm_make_smob_type("udev-device",
                                          sizeof(gudev_device_t));
-    scm_set_smob_mark(udev_device_tag, mark_udev_device);
-    scm_set_smob_free(udev_device_tag, free_udev_device);
-    scm_set_smob_print(udev_device_tag, print_udev_device);
-    scm_set_smob_equalp(udev_device_tag, equalp_udev_device);
+    set_smob_callbacks(udev_device_tag, _mark, _free, _equalp, _print);
 
 #include "udev-device-type.x"
 }

@@ -22,18 +22,19 @@
 #include <libudev.h>
 #include <pthread.h>
 
+#include "common.h"
 #include "udev-type.h"
 #include "udev-monitor-type.h"
 
 scm_t_bits udev_monitor_tag;
 
-static SCM mark_udev_monitor(SCM um)
+static SCM _mark(SCM um)
 {
     gudev_monitor_t* umd = _scm_to_udev_monitor_data(um);
     return umd->udev;
 }
 
-static size_t free_udev_monitor(SCM um)
+static size_t _free(SCM um)
 {
     gudev_monitor_t* umd = _scm_to_udev_monitor_data(um);
     scm_gc_unprotect_object(umd->scanner_callback);
@@ -42,7 +43,7 @@ static size_t free_udev_monitor(SCM um)
     return 0;
 }
 
-static int print_udev_monitor(SCM um, SCM port, scm_print_state* pstate)
+static int _print(SCM um, SCM port, scm_print_state* pstate)
 {
     (void) um;
     (void) pstate;
@@ -50,7 +51,7 @@ static int print_udev_monitor(SCM um, SCM port, scm_print_state* pstate)
     return 1;
 }
 
-static SCM equalp_udev_monitor(SCM x1, SCM x2)
+static SCM _equalp(SCM x1, SCM x2)
 {
     gudev_monitor_t* d1 = _scm_to_udev_monitor_data(x1);
     gudev_monitor_t* d2 = _scm_to_udev_monitor_data(x2);
@@ -63,6 +64,7 @@ static SCM equalp_udev_monitor(SCM x1, SCM x2)
     }
 }
 
+
 SCM_DEFINE(gudev_is_udev_monitor_p, "udev-monitor?", 1, 0, 0, (SCM x),
            "Return #t if X is an udev monitor object, #f otherwise.")
 {
@@ -123,10 +125,7 @@ void init_udev_monitor_type()
 {
     udev_monitor_tag = scm_make_smob_type("udev-monitor",
                                           sizeof(gudev_monitor_t));
-    scm_set_smob_mark(udev_monitor_tag, mark_udev_monitor);
-    scm_set_smob_free(udev_monitor_tag, free_udev_monitor);
-    scm_set_smob_print(udev_monitor_tag, print_udev_monitor);
-    scm_set_smob_equalp(udev_monitor_tag, equalp_udev_monitor);
+    set_smob_callbacks(udev_monitor_tag, _mark, _free, _equalp, _print);
 
 #include "udev-monitor-type.x"
 }

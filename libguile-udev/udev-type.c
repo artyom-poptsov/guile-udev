@@ -20,24 +20,25 @@
 
 #include <libguile.h>
 
+#include "common.h"
 #include "udev-type.h"
 
 scm_t_bits udev_tag;
 
-static SCM mark_udev(SCM udev)
+static SCM _mark(SCM udev)
 {
     (void) udev;
     return SCM_BOOL_F;
 }
 
-static size_t free_udev(SCM udev)
+static size_t _free(SCM udev)
 {
     struct udev_data* ud = _scm_to_udev_data(udev);
     udev_unref(ud->udev);
     return 0;
 }
 
-static int print_udev(SCM udev, SCM port, scm_print_state* pstate)
+static int _print(SCM udev, SCM port, scm_print_state* pstate)
 {
     (void) udev;
     (void) pstate;
@@ -45,7 +46,7 @@ static int print_udev(SCM udev, SCM port, scm_print_state* pstate)
     return 1;
 }
 
-static SCM equalp_udev(SCM x1, SCM x2)
+static SCM _equalp(SCM x1, SCM x2)
 {
     struct udev_data* d1 = _scm_to_udev_data(x1);
     struct udev_data* d2 = _scm_to_udev_data(x2);
@@ -58,6 +59,7 @@ static SCM equalp_udev(SCM x1, SCM x2)
     }
 }
 
+
 SCM_DEFINE(gudev_is_udev_p, "udev?", 1, 0, 0, (SCM x),
            "Return #t if X is an udev object, #f otherwise.")
 {
@@ -113,10 +115,7 @@ SCM_DEFINE(udev_make_udev,
 void init_udev_type()
 {
     udev_tag = scm_make_smob_type("udev", sizeof(struct udev_data));
-    scm_set_smob_mark(udev_tag, mark_udev);
-    scm_set_smob_free(udev_tag, free_udev);
-    scm_set_smob_print(udev_tag, print_udev);
-    scm_set_smob_equalp(udev_tag, equalp_udev);
+    set_smob_callbacks(udev_tag, _mark, _free, _equalp, _print);
 
 #include "udev-type.x"
 }

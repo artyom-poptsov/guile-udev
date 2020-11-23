@@ -39,3 +39,15 @@ SCM _scm_alist_from_udev_list(struct udev_list_entry* entry)
   }
   return alist;
 }
+
+void set_smob_callbacks(scm_t_bits tag,
+                        gc_mark_callback_t   mark_cb,
+                        gc_free_callback_t   free_cb,
+                        gc_equalp_callback_t equalp_cb,
+                        gc_print_callback_t  print_cb)
+{
+    scm_set_smob_mark(tag, mark_cb);
+    scm_set_smob_free(tag, free_cb);
+    scm_set_smob_print(tag, print_cb);
+    scm_set_smob_equalp(tag, equalp_cb);
+}
