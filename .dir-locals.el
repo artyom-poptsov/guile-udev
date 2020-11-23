@@ -2,7 +2,7 @@
 
 ((nil         . ((fill-column  . 78)
                  (tab-width    .  8)))
- (c-mode      . ((c-file-style . "gnu")))
+ (c-mode      . ((c-file-style . "k&r")))
  (scheme-mode . ((indent-tabs-mode . nil)
                  (eval . (put 'test-assert 'scheme-indent-function 1))
                  (eval . (put 'with-ssh    'scheme-indent-function 1))
