@@ -26,13 +26,13 @@ scm_t_bits udev_hwdb_tag;
 
 static SCM _mark(SCM udev_hwdb)
 {
-     gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
+     gudev_hwdb_t* uhd = gudev_hwdb_from_scm(udev_hwdb);
      return uhd->udev;
 }
 
 static size_t _free(SCM udev_hwdb)
 {
-     gudev_hwdb_t* uhd = _scm_to_udev_hwdb_data(udev_hwdb);
+     gudev_hwdb_t* uhd = gudev_hwdb_from_scm(udev_hwdb);
      udev_hwdb_unref(uhd->udev_hwdb);
      return 0;
 }
@@ -47,7 +47,7 @@ static int _print(SCM udev_hwdb, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-     return compare_objects(x1, x2, (converter_t) _scm_to_udev_hwdb_data);
+     return compare_objects(x1, x2, (converter_t) gudev_hwdb_from_scm);
 }
 
 
@@ -80,7 +80,7 @@ SCM udev_hwdb_to_scm(SCM udev, struct udev_hwdb *udev_hwdb)
      return smob;
 }
 
-gudev_hwdb_t* _scm_to_udev_hwdb_data(SCM x)
+gudev_hwdb_t* gudev_hwdb_from_scm(SCM x)
 {
      scm_assert_smob_type(udev_hwdb_tag, x);
      return (gudev_hwdb_t *) SCM_SMOB_DATA(x);
