@@ -99,7 +99,7 @@ SCM_DEFINE(udev_make_udev_hwdb,
            (SCM udev),
            "Make an Udev HWDB handle.")
 {
-     gudev_t* ud = _scm_to_udev_data(udev);
+     gudev_t* ud = gudev_from_scm(udev);
      struct udev_hwdb* hwdb = udev_hwdb_new(ud->udev);
      return _scm_from_udev_hwdb(udev, hwdb);
 }

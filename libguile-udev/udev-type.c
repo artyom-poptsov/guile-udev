@@ -33,7 +33,7 @@ static SCM _mark(SCM udev)
 
 static size_t _free(SCM udev)
 {
-    gudev_t* ud = _scm_to_udev_data(udev);
+    gudev_t* ud = gudev_from_scm(udev);
     udev_unref(ud->udev);
     return 0;
 }
@@ -48,8 +48,8 @@ static int _print(SCM udev, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-    gudev_t* d1 = _scm_to_udev_data(x1);
-    gudev_t* d2 = _scm_to_udev_data(x2);
+    gudev_t* d1 = gudev_from_scm(x1);
+    gudev_t* d2 = gudev_from_scm(x2);
     if ((! d1) || (! d2)) {
         return SCM_BOOL_F;
     } else if (d1 != d2) {
@@ -71,7 +71,7 @@ SCM_DEFINE(gudev_is_udev_p, "udev?", 1, 0, 0, (SCM x),
  * @param udev -- A pointer to an Udev handle.
  * @return A new udev SMOB.
  */
-SCM _scm_from_udev(struct udev *udev)
+SCM udev_to_scm(struct udev *udev)
 {
     SCM smob;
     gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof(gudev_t),
@@ -86,7 +86,7 @@ SCM _scm_from_udev(struct udev *udev)
  * @param x -- Source SCM object.
  * @return A pointer to the Udev data.
  */
-gudev_t* _scm_to_udev_data(SCM x)
+gudev_t* gudev_from_scm(SCM x)
 {
     scm_assert_smob_type(udev_tag, x);
     return (gudev_t *) SCM_SMOB_DATA(x);

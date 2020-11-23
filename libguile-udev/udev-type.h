@@ -36,7 +36,7 @@ typedef struct gudev gudev_t;
 
 void init_udev_type();
 
-gudev_t* _scm_to_udev_data(SCM x);
-SCM _scm_from_udev_data(struct udev* udev);
+gudev_t* gudev_from_scm(SCM x);
+SCM udev_to_scm(struct udev* udev);
 
 #endif // UDEV_TYPE_H
