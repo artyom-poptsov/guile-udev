@@ -38,7 +38,7 @@ typedef struct gudev_device gudev_device_t;
 void init_udev_device_type();
 
 gudev_device_t* make_gudev_device();
-gudev_device_t* _scm_to_udev_device_data(SCM x);
-SCM _scm_from_udev_device(SCM udev, struct udev_device *udev_device);
+gudev_device_t* gudev_device_from_scm(SCM x);
+SCM udev_device_to_scm(SCM udev, struct udev_device *udev_device);
 
 #endif // UDEV_DEVICE_H

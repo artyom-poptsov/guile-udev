@@ -27,13 +27,13 @@ scm_t_bits udev_device_tag;
 
 static SCM _mark(SCM udev_device)
 {
-    gudev_device_t* udd = _scm_to_udev_device_data(udev_device);
+    gudev_device_t* udd = gudev_device_from_scm(udev_device);
     return udd->udev;
 }
 
 static size_t _free(SCM udev_device)
 {
-    gudev_device_t* udd = _scm_to_udev_device_data(udev_device);
+    gudev_device_t* udd = gudev_device_from_scm(udev_device);
     udev_device_unref(udd->udev_device);
     return 0;
 }
@@ -48,7 +48,7 @@ static int _print(SCM udev_device, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-    return compare_objects(x1, x2, (converter_t) _scm_to_udev_device_data);
+    return compare_objects(x1, x2, (converter_t) gudev_device_from_scm);
 }
 
 
@@ -59,12 +59,11 @@ gudev_device_t* make_gudev_device()
 }
 
 /**
- * @brief _scm_from_udev_device -- Convert an Udev device handle to a
- *     Guile SMOB.
+ * @brief udev_device_to_scm -- Convert an Udev device handle to a Guile SMOB.
  * @param udev -- A pointer to an Udev device handle.
  * @return A new udev device SMOB.
  */
-SCM _scm_from_udev_device(SCM udev, struct udev_device *udev_device)
+SCM udev_device_to_scm(SCM udev, struct udev_device *udev_device)
 {
     SCM smob;
     gudev_device_t* udd = make_gudev_device();
@@ -75,11 +74,12 @@ SCM _scm_from_udev_device(SCM udev, struct udev_device *udev_device)
 }
 
 /**
- * @brief _scm_to_udev_data -- Convert a SCM object to a Udev data structure.
+ * @brief gudev_device_from_scm -- Convert a SCM object to a Udev data
+ *     structure.
  * @param x -- Source SCM object.
  * @return A pointer to the Udev data.
  */
-gudev_device_t* _scm_to_udev_device_data(SCM x)
+gudev_device_t* gudev_device_from_scm(SCM x)
 {
     scm_assert_smob_type(udev_device_tag, x);
     return (gudev_device_t *) SCM_SMOB_DATA(x);
