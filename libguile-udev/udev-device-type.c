@@ -48,15 +48,7 @@ static int _print(SCM udev_device, SCM port, scm_print_state* pstate)
 
 static SCM _equalp(SCM x1, SCM x2)
 {
-    gudev_device_t* d1 = _scm_to_udev_device_data(x1);
-    gudev_device_t* d2 = _scm_to_udev_device_data(x2);
-    if ((! d1) || (! d2)) {
-        return SCM_BOOL_F;
-    } else if (d1 != d2) {
-        return SCM_BOOL_F;
-    } else {
-        return SCM_BOOL_T;
-    }
+    return compare_objects(x1, x2, (converter_t) _scm_to_udev_device_data);
 }
 
 
