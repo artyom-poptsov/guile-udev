@@ -57,8 +57,8 @@ static SCM _equalp(SCM x1, SCM x2)
 }
 
 
-SCM_DEFINE(gudev_is_udev_monitor_p, "udev-monitor?", 1, 0, 0, (SCM x),
-           "Return #t if X is an udev monitor object, #f otherwise.")
+SCM_DEFINE_1(gudev_is_udev_monitor_p, "udev-monitor?", (SCM x),
+             "Return #t if X is an udev monitor object, #f otherwise.")
 {
     return scm_from_bool(SCM_SMOB_PREDICATE(udev_monitor_tag, x));
 }
@@ -103,10 +103,8 @@ gudev_monitor_t* gudev_monitor_from_scm(SCM x)
     return (gudev_monitor_t *) SCM_SMOB_DATA(x);
 }
 
-SCM_DEFINE(gudev_make_udev_monitor,
-           "%make-udev-monitor", 1, 0, 0,
-           (SCM udev),
-           "Make an Udev monitor.")
+SCM_DEFINE_1(gudev_make_udev_monitor, "%make-udev-monitor", (SCM udev),
+             "Make an Udev monitor.")
 {
     gudev_t* ud = gudev_from_scm(udev);
     struct udev_monitor* um = udev_monitor_new_from_netlink(ud->udev, "udev");

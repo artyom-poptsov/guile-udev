@@ -24,15 +24,15 @@
 
 #include <pthread.h>
 
+#include "common.h"
 #include "udev-monitor-type.h"
 #include "udev-monitor-func.h"
 #include "udev-device-type.h"
 #include "error.h"
 
-SCM_DEFINE(gudev_add_filter_x,
-           "udev-monitor-add-filter!", 3, 0, 0,
-           (SCM udev_monitor, SCM subsystem, SCM devtype),
-           "Add a filter to the monitor.")
+SCM_DEFINE_N(gudev_add_filter_x, "udev-monitor-add-filter!", 3,
+             (SCM udev_monitor, SCM subsystem, SCM devtype),
+             "Add a filter to the monitor.")
 #define FUNC_NAME s_gudev_add_filter_x
 {
     char* c_subsystem = NULL;
@@ -65,10 +65,9 @@ SCM_DEFINE(gudev_add_filter_x,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_remove_filters_x,
-           "udev-monitor-remove-filters!", 1, 0, 0,
-           (SCM udev_monitor),
-           "Remove all the filters from a monitor.")
+SCM_DEFINE_1(gudev_monitor_remove_filters_x, "udev-monitor-remove-filters!",
+             (SCM udev_monitor),
+             "Remove all the filters from a monitor.")
 #define FUNC_NAME s_gudev_monitor_remove_filters_x
 {
      gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
@@ -83,10 +82,9 @@ SCM_DEFINE(gudev_monitor_remove_filters_x,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_set_callback_x,
-           "udev-monitor-set-callback!", 2, 0, 0,
-           (SCM udev_monitor, SCM callback),
-           "Set a scanner callback.")
+SCM_DEFINE_N(gudev_monitor_set_callback_x, "udev-monitor-set-callback!", 2,
+             (SCM udev_monitor, SCM callback),
+             "Set a scanner callback.")
 #define FUNC_NAME s_gudev_monitor_set_callback_x
 {
     gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
@@ -110,10 +108,9 @@ SCM_DEFINE(gudev_monitor_set_callback_x,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_set_timeout_x,
-           "udev-monitor-set-timeout!", 3, 0, 0,
-           (SCM udev_monitor, SCM seconds, SCM milliseconds),
-           "Set monitor event poll timeout.  \
+SCM_DEFINE_N(gudev_monitor_set_timeout_x, "udev-monitor-set-timeout!", 3,
+             (SCM udev_monitor, SCM seconds, SCM milliseconds),
+             "Set monitor event poll timeout.  \
 Throws 'guile-udev-error' on errors.")
 #define FUNC_NAME s_gudev_monitor_set_timeout_x
 {
@@ -203,10 +200,9 @@ void* udev_monitor_scanner(void* arg)
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_start_scanning_x,
-           "udev-monitor-start-scanning!", 1, 0, 0,
-           (SCM udev_monitor),
-           "Enable event receiving.")
+SCM_DEFINE_1(gudev_monitor_start_scanning_x, "udev-monitor-start-scanning!",
+             (SCM udev_monitor),
+             "Enable event receiving.")
 #define FUNC_NAME s_gudev_monitor_start_scanning_x
 {
     gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
@@ -228,10 +224,9 @@ SCM_DEFINE(gudev_monitor_start_scanning_x,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_stop_scanning_x,
-           "udev-monitor-stop-scanning!", 1, 0, 0,
-           (SCM udev_monitor),
-           "Stop event receiving.")
+SCM_DEFINE_1(gudev_monitor_stop_scanning_x, "udev-monitor-stop-scanning!",
+             (SCM udev_monitor),
+             "Stop event receiving.")
 #define FUNC_NAME s_gudev_monitor_stop_scanning_x
 {
     gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
@@ -251,10 +246,9 @@ SCM_DEFINE(gudev_monitor_stop_scanning_x,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_monitor_get_udev,
-           "udev-monitor-get-udev", 1, 0, 0,
-           (SCM udev_monitor),
-           "Get the parent udev instance.")
+SCM_DEFINE_1(gudev_monitor_get_udev, "udev-monitor-get-udev",
+             (SCM udev_monitor),
+             "Get the parent udev instance.")
 #define FUNC_NAME s_gudev_monitor_get_udev
 {
      gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);

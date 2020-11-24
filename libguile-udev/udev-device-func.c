@@ -39,19 +39,15 @@ static SCM _get_string_property(SCM device,
 #undef FUNC_NAME
 
 
-SCM_DEFINE(gudev_device_get_action,
-           "udev-device-get-action", 1, 0, 0,
-           (SCM device),
-           "Get action.")
+SCM_DEFINE_1(gudev_device_get_action, "udev-device-get-action", (SCM device),
+             "Get action.")
 #define FUNC_NAME s_gudev_device_get_action
 {
     return _get_string_property(device, udev_device_get_action);
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_sysname,
-           "udev-device-get-sysname", 1, 0, 0,
-           (SCM device),
+SCM_DEFINE_1(gudev_device_get_sysname, "udev-device-get-sysname", (SCM device),
            "Get sysname.")
 #define FUNC_NAME s_gudev_device_get_sysname
 {
@@ -59,50 +55,40 @@ SCM_DEFINE(gudev_device_get_sysname,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_devpath,
-           "udev-device-get-devpath", 1, 0, 0,
-           (SCM device),
-           "Get devpath.")
+SCM_DEFINE_1(gudev_device_get_devpath, "udev-device-get-devpath", (SCM device),
+             "Get devpath.")
 #define FUNC_NAME s_gudev_device_get_devpath
 {
     return _get_string_property(device, udev_device_get_devpath);
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_devnode,
-           "udev-device-get-devnode", 1, 0, 0,
-           (SCM device),
-           "Get devnode.")
+SCM_DEFINE_1(gudev_device_get_devnode, "udev-device-get-devnode", (SCM device),
+             "Get devnode.")
 #define FUNC_NAME s_gudev_device_get_devnode
 {
     return _get_string_property(device, udev_device_get_devnode);
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_devtype,
-           "udev-device-get-devtype", 1, 0, 0,
-           (SCM device),
-           "Get the device type.")
+SCM_DEFINE_1(gudev_device_get_devtype, "udev-device-get-devtype", (SCM device),
+             "Get the device type.")
 #define FUNC_NAME s_gudev_device_get_devtype
 {
     return _get_string_property(device, udev_device_get_devtype);
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_driver,
-           "udev-device-get-driver", 1, 0, 0,
-           (SCM device),
-           "Get the device driver.")
+SCM_DEFINE_1(gudev_device_get_driver, "udev-device-get-driver", (SCM device),
+             "Get the device driver.")
 #define FUNC_NAME s_gudev_device_get_driver
 {
      return _get_string_property(device, udev_device_get_driver);
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_udev,
-           "udev-device-get-udev", 1, 0, 0,
-           (SCM device),
-           "Get the parent udev object.")
+SCM_DEFINE_1(gudev_device_get_udev, "udev-device-get-udev", (SCM device),
+             "Get the parent udev object.")
 #define FUNC_NAME s_gudev_device_get_udev
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
@@ -110,10 +96,10 @@ SCM_DEFINE(gudev_device_get_udev,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_property_value,
-           "udev-device-get-property-value", 2, 0, 0,
-           (SCM device, SCM property),
-           "Get the value of given PROPERTY for the DEVICE.")
+SCM_DEFINE_N(gudev_device_get_property_value,
+             "udev-device-get-property-value", 2,
+             (SCM device, SCM property),
+             "Get the value of given PROPERTY for the DEVICE.")
 #define FUNC_NAME s_gudev_device_get_property
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
@@ -132,10 +118,8 @@ SCM_DEFINE(gudev_device_get_property_value,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_links,
-           "udev-device-get-links", 1, 0, 0,
-           (SCM device),
-           "Get device links.")
+SCM_DEFINE_1(gudev_device_get_links, "udev-device-get-links", (SCM device),
+             "Get device links.")
 #define FUNC_NAME s_gudev_device_get_links
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
@@ -145,10 +129,9 @@ SCM_DEFINE(gudev_device_get_links,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_properties,
-           "udev-device-get-properties", 1, 0, 0,
-           (SCM device),
-           "Get device properties as an AList.")
+SCM_DEFINE_1(gudev_device_get_properties, "udev-device-get-properties",
+             (SCM device),
+             "Get device properties as an AList.")
 #define FUNC_NAME s_gudev_device_get_properties
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
@@ -158,10 +141,8 @@ SCM_DEFINE(gudev_device_get_properties,
 }
 #undef FUNC_NAME
 
-SCM_DEFINE(gudev_device_get_tags,
-           "udev-device-get-tags", 1, 0, 0,
-           (SCM device),
-           "Get device tags as an AList.")
+SCM_DEFINE_1(gudev_device_get_tags, "udev-device-get-tags", (SCM device),
+             "Get device tags as an AList.")
 #define FUNC_NAME s_gudev_device_get_tags
 {
      gudev_device_t* udd = gudev_device_from_scm(device);

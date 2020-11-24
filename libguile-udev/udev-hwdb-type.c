@@ -51,8 +51,8 @@ static SCM _equalp(SCM x1, SCM x2)
 }
 
 
-SCM_DEFINE(gudev_is_udev_hwdb_p, "udev-hwdb?", 1, 0, 0, (SCM x),
-           "Return #t if X is an udev HWDB object, #f otherwise.")
+SCM_DEFINE_1(gudev_is_udev_hwdb_p, "udev-hwdb?", (SCM x),
+             "Return #t if X is an udev HWDB object, #f otherwise.")
 {
      return scm_from_bool(SCM_SMOB_PREDICATE(udev_hwdb_tag, x));
 }
@@ -86,10 +86,8 @@ gudev_hwdb_t* gudev_hwdb_from_scm(SCM x)
      return (gudev_hwdb_t *) SCM_SMOB_DATA(x);
 }
 
-SCM_DEFINE(udev_make_udev_hwdb,
-           "make-udev-hwdb", 1, 0, 0,
-           (SCM udev),
-           "Make an Udev HWDB handle.")
+SCM_DEFINE_1(udev_make_udev_hwdb, "make-udev-hwdb", (SCM udev),
+             "Make an Udev HWDB handle.")
 {
      gudev_t* ud = gudev_from_scm(udev);
      struct udev_hwdb* hwdb = udev_hwdb_new(ud->udev);

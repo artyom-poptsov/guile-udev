@@ -26,6 +26,27 @@
 
 #include "common.h"
 
+
+/**
+ * This macro is a little bit shorter than the original SCM_DEFINE macro, it
+ * allows to define a Scheme procedure with N required parameters.
+ */
+#define SCM_DEFINE_N(c_name, scheme_name, req, arglist, docstring)      \
+    SCM_DEFINE(c_name, scheme_name, req, 0, 0, arglist, docstring)
+
+/**
+ * Define a Scheme procedure with zero parameters.
+ */
+#define SCM_DEFINE_0(c_name, scheme_name, docstring)           \
+    SCM_DEFINE(c_name, scheme_name, 0, 0, 0, (), docstring)
+
+/**
+ * Define a Scheme procedure with only one required parameter.
+ */
+#define SCM_DEFINE_1(c_name, scheme_name, arglist, docstring)      \
+    SCM_DEFINE(c_name, scheme_name, 1, 0, 0, arglist, docstring)
+
+
 /* GC callbacks. */
 typedef SCM    (*gc_mark_callback_t  )(SCM obj);
 typedef size_t (*gc_free_callback_t  )(SCM obj);

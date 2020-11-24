@@ -25,10 +25,9 @@
 #include "common.h"
 #include "error.h"
 
-SCM_DEFINE(gudev_hwdb_lookup,
-           "udev-hwdb-lookup", 2, 0, 0,
-           (SCM udev_hwdb, SCM mod_alias),
-           "Lookup a matching device in the hardware database.")
+SCM_DEFINE_N(gudev_hwdb_lookup, "udev-hwdb-lookup", 2,
+             (SCM udev_hwdb, SCM mod_alias),
+             "Lookup a matching device in the hardware database.")
 #define FUNC_NAME s_gudev_hwdb_lookup
 {
      gudev_hwdb_t* uhd = gudev_hwdb_from_scm(udev_hwdb);

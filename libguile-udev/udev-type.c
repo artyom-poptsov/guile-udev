@@ -52,7 +52,7 @@ static SCM _equalp(SCM x1, SCM x2)
 }
 
 
-SCM_DEFINE(gudev_is_udev_p, "udev?", 1, 0, 0, (SCM x),
+SCM_DEFINE_1(gudev_is_udev_p, "udev?", (SCM x),
            "Return #t if X is an udev object, #f otherwise.")
 {
     return scm_from_bool(SCM_SMOB_PREDICATE(udev_tag, x));
@@ -84,12 +84,7 @@ gudev_t* gudev_from_scm(SCM x)
     return (gudev_t *) SCM_SMOB_DATA(x);
 }
 
-
-
-SCM_DEFINE(udev_make_udev,
-           "make-udev", 0, 0, 0,
-           (),
-           "Make an Udev handle.")
+SCM_DEFINE_0(udev_make_udev, "make-udev", "Make an Udev handle.")
 {
     SCM smob;
     gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof (gudev_t),
