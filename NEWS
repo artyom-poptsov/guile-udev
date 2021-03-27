@@ -8,14 +8,20 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   notice and this notice are preserved.
 
 * Unreleased
-** (udev monitor): Allow to specify 'select' timeout
+** Changes in (udev monitor)
+*** Allow to specify 'select' timeout
    The module now provides 'udev-monitor-set-timeout!' procedure that allows
    to specify timeout for calls to 'select'.
-** (udev monitor): New procedure 'make-udev-monitor'
-   The module now provides two procedures for creating udev monitors:
-   low-level '%make-udev-monitor' and high-level 'make-udev-monitor' procedure
-   that allows to specify monitor parameters by means of keywords.
-
+*** New procedure 'make-udev-monitor'
+    The module now provides two procedures for creating udev monitors:
+    low-level '%make-udev-monitor' and high-level 'make-udev-monitor' procedure
+    that allows to specify monitor parameters by means of keywords.
+*** New procedure 'udev-monitor-set-error-callback!'
+    This procedure allows to set a callback that will be called on errors when
+    scanner is started.
+*** 'make-udev-monitor' now allows to set an error callback
+    This callback will be called on errors during device scanning. It defaults
+    to a procedure that prints error messages to stderr.
  
 * Changes in version 0.1.0 (2020-07-31)
 ** Release of the first version of Guile-Udev
