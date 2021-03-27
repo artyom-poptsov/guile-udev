@@ -34,6 +34,7 @@ struct gudev_monitor {
      struct udev_monitor* udev_monitor;
      SCM udev;
      SCM scanner_callback;
+     SCM error_callback;
 
      /**
       * @brief is_scanning -- does the monitor perform the scanning

@@ -229,8 +229,17 @@ The callback procedure will receive as the 1nd parameter an udev device
 instance.
 @end deffn
 
+@deffn {Scheme Procedure} udev-monitor-set-error-callback! udev-monitor callback
+Set the @var{udev-monitor} callback that will be called on UDev errors.
+
+The callback procedure will receive as an udev device instance as the 1nd
+parameter and an error message as the 2nd parameter.
+@end deffn
+
 @deffn {Scheme Procedure} udev-monitor-start-scanning! udev-monitor
 Start the event scanning for the given @var{udev-monitor}.
+
+In case of any errors in the scanner thread, an error callback will be called.
 @end deffn
 
 @deffn {Scheme Procedure} udev-monitor-stop-scanning! udev-monitor
