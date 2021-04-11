@@ -17,6 +17,7 @@ jobs:
           sudo apt install  \
               guile-3.0-dev \
               gcc           \
+              libudev-dev   \
               gettext       \
               automake      \
               autoconf      \
