@@ -174,7 +174,7 @@ void* udev_monitor_scanner(void* arg)
 {
     SCM udev_monitor = (SCM) arg;
     gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
-    fd_set fd_set;
+    fd_set fd_set_;
     int result;
     int select_result;
     int monitor_fd;
@@ -212,9 +212,9 @@ void* udev_monitor_scanner(void* arg)
         }
         pthread_mutex_unlock(&umd->lock);
 
-        FD_ZERO(&fd_set);
-        FD_SET(monitor_fd, &fd_set);
-        select_result = select(monitor_fd + 1, &fd_set, NULL, NULL, &timeout);
+        FD_ZERO(&fd_set_);
+        FD_SET(monitor_fd, &fd_set_);
+        select_result = select(monitor_fd + 1, &fd_set_, NULL, NULL, &timeout);
         if (select_result == -1) {
              char msg[] = "Error during 'select' call.";
              scm_call_2(error_callback, udev_monitor,
@@ -223,7 +223,7 @@ void* udev_monitor_scanner(void* arg)
              pthread_cancel(pthread_self());
              break;
         }
-        if (FD_ISSET(monitor_fd, &fd_set)) {
+        if (FD_ISSET(monitor_fd, &fd_set_)) {
             dev = udev_monitor_receive_device(umd->udev_monitor);
             device = udev_device_to_scm(umd->udev, dev);
             scm_call_1(callback, device);
