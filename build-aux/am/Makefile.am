@@ -1,9 +1,9 @@
-## Config file for GNU Automake. 
+## Config file for GNU Automake.
 ##
-## Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2020-2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-Udev.
-## 
+##
 ## Guile-Udev is free software: you can redistribute it and/or
 ## modify it under the terms of the GNU General Public License as
 ## published by the Free Software Foundation, either version 3 of the
@@ -19,7 +19,7 @@
 
 AUTOMAKE_OPTIONS = gnu
 
-am_frags = guilec
+am_frags = guilec guile.am snarf
 
 EXTRA_DIST = $(am_frags)
 
