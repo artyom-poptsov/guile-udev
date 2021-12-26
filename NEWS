@@ -7,6 +7,16 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** Fixed compilation errors on aarch64
+   The naming conflict between variable 'fd_set' and 'typedef(fd_set)' can
+   cause compilation errors on aarch64, just like in this issue reported on
+   C++: <http://www.cplusplus.com/forum/unices/108481/>
+
+   Now this problem should be fixed.
+
+   Reported by: Antlers <antlers@github.com> in
+   <https://github.com/artyom-poptsov/guile-udev/pull/1>
 * Changes in version 0.2.0 (2021-04-11)
 ** Changes in (udev monitor)
 *** Allow to specify 'select' timeout

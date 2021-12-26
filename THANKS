@@ -1,1 +1,6 @@
 Guile-Udev has originally been written by Artyom V. Poptsov.
+
+Thanks to the following people who contributed to Guile-Udev
+through bug reports or patches:
+
+* Antlers <antlers@github.com>
