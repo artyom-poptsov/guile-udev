@@ -1,4 +1,4 @@
-## Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2020-2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-Udev.
 ##
@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/am/guilec
+include $(top_srcdir)/build-aux/am/guilec
 
 SCM_SOURCES = \
 	device.scm		\

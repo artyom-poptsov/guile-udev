@@ -1,6 +1,6 @@
 ## Config file for GNU Automake. 
 ##
-## Copyright (C) 2013, 2014, 2015, 2016 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2020-2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-Udev.
 ##
@@ -17,9 +17,9 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
-ACLOCAL_AMFLAGS = -I m4 --install
+ACLOCAL_AMFLAGS = -I build-aux/m4 --install
 
-SUBDIRS = am libguile-udev build-aux m4 modules doc
+SUBDIRS = . libguile-udev build-aux modules doc
 
 EXTRA_DIST =					\
 	build-aux/config.rpath			\

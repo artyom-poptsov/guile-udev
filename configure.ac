@@ -3,7 +3,7 @@ dnl   Process this file with autoconf to produce configure.
 dnl
 
 define(GUILE_UDEV_CONFIGURE_COPYRIGHT, [[
-Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+Copyright (C) 2020-2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 
 This file is part of Guile-Udev.
 
@@ -28,7 +28,7 @@ AC_INIT([Guile-Udev], [0.2.0], [poptsov.artyom@gmail.com],
 AC_COPYRIGHT(GUILE_UDEV_CONFIGURE_COPYRIGHT)
 
 AC_CONFIG_AUX_DIR([build-aux])
-AC_CONFIG_MACRO_DIR([m4])
+AC_CONFIG_MACRO_DIR([build-aux/m4])
 
 AM_INIT_AUTOMAKE([color-tests])
 m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])], [AC_SUBST([AM_DEFAULT_VERBOSITY],1)])
@@ -103,7 +103,7 @@ GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
 AC_SUBST(GUILE_EFFECTIVE_VERSION)
 
 AC_CONFIG_FILES([Makefile libguile-udev/Makefile build-aux/Makefile])
-AC_CONFIG_FILES([m4/Makefile am/Makefile doc/Makefile])
+AC_CONFIG_FILES([build-aux/m4/Makefile build-aux/am/Makefile doc/Makefile])
 AC_CONFIG_FILES([modules/Makefile modules/udev/Makefile])
 
 AM_CONDITIONAL([CROSS_COMPILING], [test "x$cross_compiling" = "xyes"])

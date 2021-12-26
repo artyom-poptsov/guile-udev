@@ -15,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 
-include $(top_srcdir)/am/snarf
+include $(top_srcdir)/build-aux/am/snarf
 
 lib_LTLIBRARIES = libguile-udev.la
 
