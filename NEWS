@@ -7,8 +7,8 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
-* Unreleased
-** Fixed compilation errors on aarch64
+* Changes in version 0.2.1 (2021-12-26)
+** Fix compilation errors on aarch64
    The naming conflict between variable 'fd_set' and 'typedef(fd_set)' can
    cause compilation errors on aarch64, just like in this issue reported on
    C++: <http://www.cplusplus.com/forum/unices/108481/>
@@ -17,6 +17,14 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
 
    Reported by: Antlers <antlers@github.com> in
    <https://github.com/artyom-poptsov/guile-udev/pull/1>
+** Bump libtool library version
+   The library version wasn't properly updated in the 0.2.0 release. Now it is
+   bumped to 1:1:0 according to libtool recommendations:
+   <https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html>
+
+   Old programs that use Guile-UDev 0.1.0 or 0.2.0 can use the new version
+   0.2.1 as a drop-in replacement.
+
 * Changes in version 0.2.0 (2021-04-11)
 ** Changes in (udev monitor)
 *** Allow to specify 'select' timeout

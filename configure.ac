@@ -21,11 +21,14 @@ You should have received a copy of the GNU General Public License
 along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-Udev], [0.2.0], [poptsov.artyom@gmail.com],
+AC_INIT([Guile-Udev], [0.2.1], [poptsov.artyom@gmail.com],
                      [guile-udev],
                      [https://github.com/artyom-poptsov/guile-udev])
 
 AC_COPYRIGHT(GUILE_UDEV_CONFIGURE_COPYRIGHT)
+
+LIBGUILE_UDEV_INTERFACE="1:1:0"
+AC_SUBST(LIBGUILE_UDEV_INTERFACE)
 
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([build-aux/m4])
@@ -95,9 +98,6 @@ if test "x$guilesitedir" = "x"; then
    guilesitedir="$datadir/guile/site/$GUILE_EFFECTIVE_VERSION"
 fi
 AC_SUBST([guilesitedir])
-
-LIBGUILE_UDEV_INTERFACE="1:0:0"
-AC_SUBST(LIBGUILE_UDEV_INTERFACE)
 
 GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
 AC_SUBST(GUILE_EFFECTIVE_VERSION)
