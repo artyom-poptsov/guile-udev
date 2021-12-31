@@ -7,6 +7,11 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Changes in version 0.2.2 (2021-12-31)
+** Remove requirement for 'whereis' command
+   Guile-Udev required 'whereis' from 'util-linux' package to find
+   'guile-snarf' command.  Now this dependency is removed.
+
 * Changes in version 0.2.1 (2021-12-26)
 ** Fix compilation errors on aarch64
    The naming conflict between variable 'fd_set' and 'typedef(fd_set)' can
