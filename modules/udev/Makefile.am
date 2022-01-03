@@ -23,6 +23,8 @@ SOURCES = \
 	udev.scm		\
 	hwdb.scm
 
+ETAGS_ARGS = $(SOURCES)
+
 moddir=$(prefix)/share/guile/site/$(GUILE_EFFECTIVE_VERSION)/udev
 godir=$(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache/udev
 
