@@ -7,6 +7,14 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Changes in version 0.2.3 (2022-01-03)
+** Bugfix: Compile and install Guile modules
+   Guile-Udev 0.2.2 had an error in Automake files due to which GNU Autotools
+   would ignore Guile modules altogether.  Now this error should be fixed.
+
+   Reported by by Mathieu Othacehe in
+   <https://lists.gnu.org/archive/html/guix-patches/2022-01/msg00102.html>
+
 * Changes in version 0.2.2 (2021-12-31)
 ** Remove requirement for 'whereis' command
    Guile-Udev required 'whereis' from 'util-linux' package to find

@@ -6,3 +6,5 @@ See also files THANKS and ChangeLog.
   The author and the current maintainer.
 * Antlers <antlers@github.com>
   Bug fixes in 'libguile-udev/udev-monitor-func.c'
+* Mathieu Othacehe <othacehe@gnu.org>
+  Bug reports in GNU Guix mailing list.
