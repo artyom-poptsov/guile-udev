@@ -1,4 +1,4 @@
-## Copyright (C) 2020-2021 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+## Copyright (C) 2020-2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ##
 ## This file is part of Guile-Udev.
 ##
@@ -17,7 +17,7 @@
 
 include $(top_srcdir)/build-aux/am/guile.am
 
-SCM_SOURCES = \
+SOURCES = \
 	device.scm		\
 	monitor.scm		\
 	udev.scm		\
