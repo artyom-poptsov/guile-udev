@@ -26,9 +26,24 @@ Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [
     - pkg-config
 
 ** Building and installation
+*** GNU Guix
+To install the latest release of Guile-Udev on [[https://guix.gnu.org/][GNU Guix]], issue the following
+command:
+ #+BEGIN_EXAMPLE shell
+$ guix install guile-udev
+ #+END_EXAMPLE
+
+ If you want to install the Git version you can use =guix.scm= package
+ description that Guile-Udev provides in the repository:
+  #+BEGIN_EXAMPLE shell
+$ guix build -f guix.scm
+$ guix package -f guix.scm
+ #+END_EXAMPLE
+
+*** Ubuntu GNU/Linux
    On Ubuntu GNU/Linux 20.04 you'll need to install the needed dependencies to
    be able to build the library with Guile 3.0:
- #+BEGIN_EXAMPLE
+ #+BEGIN_EXAMPLE shell
 $ sudo apt install \
     gcc            \
     make           \
@@ -42,8 +57,9 @@ $ sudo apt install \
     libguile-dev
 #+END_EXAMPLE
 
+*** Manual
    To build and install the library, use the following commands:
- #+BEGIN_EXAMPLE
+ #+BEGIN_EXAMPLE shell
  $ autoreconf -vif
  $ ./configure
  $ make
