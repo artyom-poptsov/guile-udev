@@ -117,6 +117,11 @@ SCM_DEFINE_N(gudev_device_get_property_value,
 
      const char* value = udev_device_get_property_value(udd->udev_device,
                                                         c_property);
+     if (! value) {
+          guile_udev_error1(FUNC_NAME,
+                            "Could not get the property value",
+                            scm_list_2(device, property));
+     }
 
      scm_dynwind_end();
 
