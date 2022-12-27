@@ -22,16 +22,26 @@
 #include <libudev.h>
 
 #include "common.h"
+#include "error.h"
 
 /**
  * Convert an Udev list to a Scheme alist.
  */
 SCM _scm_alist_from_udev_list(struct udev_list_entry* entry)
+#define FUNC_NAME "_scm_alist_from_udev_list"
 {
   SCM alist = scm_make_list(scm_from_int(0), SCM_UNDEFINED);
   for (; entry != NULL; entry = udev_list_entry_get_next(entry)) {
     const char* name  = udev_list_entry_get_name(entry);
     const char* value = udev_list_entry_get_value(entry);
+
+    if (! name) {
+         guile_udev_error1(FUNC_NAME, "name is NULL", scm_list(SCM_UNDEFINED));
+    }
+
+    if (! value) {
+         guile_udev_error1(FUNC_NAME, "value is NULL", scm_list(SCM_UNDEFINED));
+    }
 
     alist = scm_acons(scm_from_locale_string(name),
                       scm_from_locale_string(value),
@@ -39,6 +49,7 @@ SCM _scm_alist_from_udev_list(struct udev_list_entry* entry)
   }
   return alist;
 }
+#undef FUNC_NAME
 
 /** Procedure that converts an SCM object to an Guile-UDev structure
  * pointer.
