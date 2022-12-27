@@ -39,6 +39,7 @@ static SCM _get_string_property(SCM device,
           return scm_from_locale_string(result);
      } else {
           guile_udev_error1(FUNC_NAME, "Could not get a string", device);
+          return SCM_UNDEFINED; /* Not reached. */
      }
 }
 #undef FUNC_NAME
