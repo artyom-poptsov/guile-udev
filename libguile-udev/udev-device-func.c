@@ -1,6 +1,6 @@
 /* udev-device-func.c -- Udev device procedures.
  *
- * Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+ * Copyright (C) 2020-2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
  *
  * This file is part of Guile-Udev.
  *
