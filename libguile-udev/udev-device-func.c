@@ -105,7 +105,7 @@ SCM_DEFINE_N(gudev_device_get_property_value,
              "udev-device-get-property-value", 2,
              (SCM device, SCM property),
              "Get the value of given PROPERTY for the DEVICE.")
-#define FUNC_NAME s_gudev_device_get_property
+#define FUNC_NAME s_gudev_device_get_property_value
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
      char* c_property = NULL;
