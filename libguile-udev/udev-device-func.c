@@ -24,6 +24,7 @@
 #include "udev-device-type.h"
 #include "udev-device-func.h"
 #include "common.h"
+#include "error.h"
 
 /**
  * Get a string device property from an SCM device object.
@@ -34,7 +35,11 @@ static SCM _get_string_property(SCM device,
 {
      gudev_device_t* udd = gudev_device_from_scm(device);
      const char* result = func(udd->udev_device);
-     return scm_from_locale_string(result);
+     if (result) {
+          return scm_from_locale_string(result);
+     } else {
+          guile_udev_error1(FUNC_NAME, "Could not get a string", device);
+     }
 }
 #undef FUNC_NAME
 
