@@ -21,7 +21,7 @@ You should have received a copy of the GNU General Public License
 along with Guile-Udev.  If not, see <http://www.gnu.org/licenses/>.
 ]])
 
-AC_INIT([Guile-Udev], [0.2.3], [poptsov.artyom@gmail.com],
+AC_INIT([Guile-Udev], [0.2.4], [poptsov.artyom@gmail.com],
                      [guile-udev],
                      [https://github.com/artyom-poptsov/guile-udev])
 
@@ -29,7 +29,7 @@ AC_COPYRIGHT(GUILE_UDEV_CONFIGURE_COPYRIGHT)
 
 dnl See
 dnl   <https://www.gnu.org/software/libtool/manual/html_node/Updating-version-info.html>
-LIBGUILE_UDEV_INTERFACE="1:3:0"
+LIBGUILE_UDEV_INTERFACE="1:4:0"
 AC_SUBST(LIBGUILE_UDEV_INTERFACE)
 
 AC_CONFIG_AUX_DIR([build-aux])

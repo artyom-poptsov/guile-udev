@@ -7,6 +7,15 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Changes in version 0.2.4 (2022-12-27)
+** Bugfix: Check every string that comes from the udev for NULL
+Guile-Udev would always fail with obscure errors when the procedures from the
+udev library return a NULL pointer instead of an expected C string.  Now there
+are extra checks for NULL pointers before converting C strings to Scheme
+objects; in that way Guile-Udev will fail with more meaningful errors when
+faced with a NULL pointer.
+** Add a GNU Guix recipe (=guix.scm=)
+
 * Changes in version 0.2.3 (2022-01-03)
 ** Bugfix: Compile and install Guile modules
    Guile-Udev 0.2.2 had an error in Automake files due to which GNU Autotools
