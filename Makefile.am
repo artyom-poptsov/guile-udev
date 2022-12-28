@@ -19,7 +19,7 @@
 
 ACLOCAL_AMFLAGS = -I build-aux/m4 --install
 
-SUBDIRS = . libguile-udev build-aux modules doc
+SUBDIRS = . libguile-udev build-aux modules doc tests
 
 EXTRA_DIST =					\
 	build-aux/config.rpath			\

@@ -112,6 +112,7 @@ AC_SUBST(GUILE_EFFECTIVE_VERSION)
 AC_CONFIG_FILES([Makefile libguile-udev/Makefile build-aux/Makefile])
 AC_CONFIG_FILES([build-aux/m4/Makefile build-aux/am/Makefile doc/Makefile])
 AC_CONFIG_FILES([modules/Makefile modules/udev/Makefile])
+AC_CONFIG_FILES([tests/Makefile])
 
 AM_CONDITIONAL([CROSS_COMPILING], [test "x$cross_compiling" = "xyes"])
 
