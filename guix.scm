@@ -56,6 +56,23 @@
                         #:recursive? #t
                         #:select? (git-predicate %source-dir)))
     (build-system gnu-build-system)
+    (arguments
+     (list
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'patch-extension-path
+            (lambda* (#:key outputs #:allow-other-keys)
+              (substitute* (find-files "." "\\.scm")
+                (("\\(load-extension \"libguile-udev\" *\"(.*)\"\\)" _ o)
+                 (string-append
+                  (object->string
+                   `(or (false-if-exception
+                         (load-extension "libguile-udev" ,o))
+                        (load-extension
+                         ,(string-append
+                           #$output
+                           "/lib/libguile-udev.so")
+                         ,o)))))))))))
     (native-inputs
      (list autoconf
            automake
