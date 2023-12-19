@@ -8,3 +8,5 @@ See also files THANKS and ChangeLog.
   Bug fixes in 'libguile-udev/udev-monitor-func.c'
 * Mathieu Othacehe <othacehe@gnu.org>
   Bug reports in GNU Guix mailing list.
+* Maxim Cournoyer <maxim.cournoyer@gmail.com>
+  Improvements to the documentation.

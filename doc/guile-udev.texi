@@ -11,6 +11,7 @@
 This manual documents Guile-Udev version @value{VERSION}.
 
 Copyright (C) 2020 Artyom V. Poptsov @email{poptsov.artyom@@gmail.com}
+Copyright (C) 2023 Maxim Cournoyer @email{maxim.cournoyer@@gmail.com}
 
 Permission is granted to copy, distribute and/or modify this document
 under the terms of the GNU Free Documentation License, Version 1.3 or
@@ -54,10 +55,9 @@ Documentation License.''
 
 @menu
 * Introduction::
-* Installation::
-* API Reference::
-
-Appendices
+* Installing as a system package::
+* Installing from sources::
+* API Reference::               Appendices
 
 * GNU Free Documentation License::  The license of this manual.
 
@@ -72,8 +72,19 @@ Guile-Udev is a module that provides bindings to
 @url{https://www.freedesktop.org/software/systemd/man/libudev.html, libudev}
 for programs written in @url{https://www.gnu.org/software/guile/, GNU Guile}.
 
-@node Installation
-@chapter Installation
+@node Installing as a system package
+@chapter Installing as a system package
+
+The @url{https://guix.gnu.org, GNU Guix} package manager, which can run on top
+of any GNU(/Linux) distribution, offers a @code{guile-udev} package which can
+be installed via:
+
+@example
+guix install guile-udev
+@end example
+
+@node Installing from sources
+@chapter Installing from sources
 
 Guile-Udev sources are available from GitHub at
 @url{https://github.com/artyom-poptsov/guile-udev/}. This section describes
@@ -85,6 +96,15 @@ Guile-Udev depends on the following packages:
 @item @url{https://www.gnu.org/software/guile/, GNU Guile}, 2.0
 @item libudev
 @end itemize
+
+Alternatively, if you have GNU Guix installed, you can run:
+
+@example
+guix shell
+@end example
+
+After following the instructions displayed by the above command to authorize
+automatically loading the @file{guix.scm} file at the root of the repository.
 
 Get the sources of Guile-Udev from GitHub using Git (a good introduction to Git
 is @url{https://git-scm.com/book/en/v2, Pro Git} book, which is available
