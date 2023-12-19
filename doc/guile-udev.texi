@@ -57,6 +57,7 @@ Documentation License.''
 * Introduction::
 * Installing as a system package::
 * Installing from sources::
+* Using this library before it is installed::
 * API Reference::               Appendices
 * Examples::
 * GNU Free Documentation License::  The license of this manual.
@@ -137,6 +138,17 @@ the @option{--with-guilesitedir} option so that this package is
 installed in Guile's default path.  But, if you don't know where your
 Guile site directory is, run @command{configure} without the option,
 and it will give you a suggestion.
+
+@node Using this library before it is installed
+@chapter Using this library before it is installed
+
+If you would like to test this Guile extension as you work on it, without
+having to install it, you can use the @file{pre-inst-env} wrapper after having
+configured and built the project, e.g.@:
+
+@example
+./pre-inst-env examples/device-listener.scm
+@end example
 
 @node API Reference
 @chapter API Reference
