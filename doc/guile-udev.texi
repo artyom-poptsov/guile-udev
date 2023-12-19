@@ -185,8 +185,9 @@ Default value: @code{(const #f)}
 @item filter
 Udev event filter.
 
-Expected type: a list with two elements: the 1st element is sybsystem name,
-the 2nd element is device type
+Expected type: a list with two elements: the first element is the subsystem
+name, while the second element is the device type.  If needed, more filters
+can be installed via the @code{udev-monitor-add-filter!} procedure.
 
 Default value: @code{#f}
 
