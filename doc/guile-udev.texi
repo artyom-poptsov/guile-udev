@@ -175,7 +175,9 @@ parameters specified by keywords described below.
 
 @table @samp
 @item callback
-Callback to be called when an udev event occurs.
+A procedure to be called when an udev event occurs.  It gets applied to a
+single argument, which is the @code{udev-device} object the event originated
+from.
 
 Expected type: procedure
 
