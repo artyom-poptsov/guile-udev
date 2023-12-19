@@ -58,7 +58,7 @@ Documentation License.''
 * Installing as a system package::
 * Installing from sources::
 * API Reference::               Appendices
-
+* Examples::
 * GNU Free Documentation License::  The license of this manual.
 
 @end menu
@@ -350,6 +350,27 @@ Usage example:
 @end lisp
 
 @end deffn
+
+@node Examples
+@chapter Examples
+
+Here's an example of a device listener that prints the device path of USB
+devices that emit udev events:
+
+@lisp
+@verbatiminclude ../examples/device-listener.scm
+@end lisp
+
+To trigger USB events without actually inserting or removing USB devices into
+your computer, you can use the @command{udevadm} command (provided by the
+@code{eudev} package from Guix) @emph{as root}:
+
+@example
+# udevadm trigger --verbose --subsystem-match=usb
+@end example
+
+You can find the source of this example in the @file{examples} directory of
+the project.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
