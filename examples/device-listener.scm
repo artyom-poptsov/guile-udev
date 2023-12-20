@@ -1,5 +1,4 @@
-#!/usr/bin/guile \
--L modules -e main -s
+#!/usr/bin/env -S guile -L modules -e main -s
 !#
 
 (use-modules (udev udev)

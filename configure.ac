@@ -109,6 +109,7 @@ AC_SUBST([guilesitedir])
 GUILE_EFFECTIVE_VERSION=`$GUILE -c '(display (effective-version))'`
 AC_SUBST(GUILE_EFFECTIVE_VERSION)
 
+AC_CONFIG_FILES([pre-inst-env], [chmod +x pre-inst-env])
 AC_CONFIG_FILES([Makefile libguile-udev/Makefile build-aux/Makefile])
 AC_CONFIG_FILES([build-aux/m4/Makefile build-aux/am/Makefile doc/Makefile])
 AC_CONFIG_FILES([modules/Makefile modules/udev/Makefile])
