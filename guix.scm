@@ -1,6 +1,6 @@
 ;; guix.scm --- GNU Guix package recipe    -*- coding: utf-8 -*-
 ;;
-;; Copyright (C) 2022 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+;; Copyright (C) 2022-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
 ;;
 ;; This file is part of Guile-Udev.
 ;;
@@ -80,7 +80,8 @@
            libtool
            texinfo
            pkg-config
-           which))
+           which
+           guile-3.0))                  ; Needed for cross-compiling
     (inputs
      (list guile-3.0 eudev))
     (home-page "https://github.com/artyom-poptsov/guile-udev")
