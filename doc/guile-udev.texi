@@ -198,8 +198,9 @@ Default value: @code{(const #f)}
 Udev event filter.
 
 Expected type: a list with two elements: the first element is the subsystem
-name, while the second element is the device type.  If needed, more filters
-can be installed via the @code{udev-monitor-add-filter!} procedure.
+name, while the second element is the device type.  To match @emph{any} device
+type, you may use @code{#f} instead of an actual device type.  If needed, more
+filters can be installed via the @code{udev-monitor-add-filter!} procedure.
 
 Default value: @code{#f}
 
@@ -240,9 +241,12 @@ Check if @var{x} is an udev-monitor object. Return @code{#t} if it is, or
 @code{#f} otherwise.
 @end deffn
 
-@deffn {Scheme Procedure} udev-monitor-add-filter! udev-monitor sybsystem devtype
+@deffn {Scheme Procedure} udev-monitor-add-filter! udev-monitor subsystem [devtype]
 Add a new filter for the events on @var{udev-monitor} that will trigger the
-provided callback. This procedure must be called before starting the scanning.
+provided callback, for a device of type @var{devtype} belonging to the
+@var{subsystem} subsystem.  @var{devtype} is optional; when omitted, devices
+of @emph{any} type are matched.  This procedure must be called before starting
+the scanning.
 @end deffn
 
 @deffn {Scheme Procedure} udev-monitor-remove-filters! udev-monitor

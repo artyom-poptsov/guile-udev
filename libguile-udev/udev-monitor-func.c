@@ -30,9 +30,11 @@
 #include "udev-device-type.h"
 #include "error.h"
 
-SCM_DEFINE_N(gudev_add_filter_x, "udev-monitor-add-filter!", 3,
-             (SCM udev_monitor, SCM subsystem, SCM devtype),
-             "Add a filter to the monitor.")
+SCM_DEFINE(gudev_add_filter_x, "udev-monitor-add-filter!", 2, 1, 0,
+           (SCM udev_monitor, SCM subsystem, SCM devtype),
+           "Add a filter to the monitor.  @var{subsystem} is the subsystem\n"
+	   "associated with a device while @var{devtype} is its device type.\n"
+	   "The @var{devtype} argument is optional.")
 #define FUNC_NAME s_gudev_add_filter_x
 {
     char* c_subsystem = NULL;
@@ -41,14 +43,17 @@ SCM_DEFINE_N(gudev_add_filter_x, "udev-monitor-add-filter!", 3,
     int result;
 
     SCM_ASSERT(scm_is_string(subsystem), subsystem, SCM_ARG1, FUNC_NAME);
-    SCM_ASSERT(scm_is_string(devtype),   devtype,   SCM_ARG2, FUNC_NAME);
+    SCM_ASSERT(scm_is_string(devtype) || SCM_UNBNDP(devtype), devtype,
+	       SCM_ARG2, FUNC_NAME);
 
     scm_dynwind_begin(0);
 
     c_subsystem = scm_to_locale_string(subsystem);
     scm_dynwind_free(c_subsystem);
 
-    c_devtype   = scm_to_locale_string(devtype);
+    if (!SCM_UNBNDP(devtype))
+        c_devtype = scm_to_locale_string(devtype);
+
     scm_dynwind_free(c_devtype);
 
     result = udev_monitor_filter_add_match_subsystem_devtype(umd->udev_monitor,
