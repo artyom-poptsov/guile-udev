@@ -7,6 +7,42 @@ Copyright (C) Artyom V. Poptsov <poptsov.artyom@gmail.com>
   are permitted in any medium without royalty provided the copyright
   notice and this notice are preserved.
 
+* Unreleased
+** =udev-monitor-add-filter!=: Make "devtype" parameter optional
+Now =udev-monitor-add-filter!= can be called without the =devtype= parameter
+so the UDEV monitor will match all events for the specified subsystem.
+
+Implemented by Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+** =make-udev-monitor=: Now allows to set a filter without device type
+When =#:filter= passed without device type all events with the specified
+subsystem will be handled.
+
+Implemented by Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+** New 'pre-inst-env' wrapper script
+Add a 'pre-inst-env' wrapper script to test library before installing.
+
+Implemented by Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+** =guix.scm=: Improve
+*** Patch sources to fix the Guile extension path
+Fixed by Zheng Junjie <zhengjunjie@iscas.ac.cn>.
+*** Fix cross-building
+Tested on =aarch64-linux-gnu=.
+** =examples/device-listener.scm=: Improve
+Now the program uses more portable shebang.
+
+Thanks to Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+** Implement GNU Guix workflows for GitHub CI
+Targets are:
+- =x86_64-linux-gnu=
+- =aarch64-linux-gnu=
+** Add tests
+** Update and improve the documentation
+- Document how GNU Guix can be used to develop or install guile-udev.
+- Refine documentation for the =make-udev-monitor= procedure.
+- Show the existing complete device listener example content.
+
+  Thanks to Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+
 * Changes in version 0.2.4 (2022-12-27)
 ** Bugfix: Check every string that comes from the udev for NULL
 Guile-Udev would always fail with obscure errors when the procedures from the
