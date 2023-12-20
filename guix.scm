@@ -81,7 +81,9 @@
            texinfo
            pkg-config
            which
-           guile-3.0))                  ; Needed for cross-compiling
+           ;; Needed for cross-compiling
+           eudev
+           guile-3.0))
     (inputs
      (list guile-3.0 eudev))
     (home-page "https://github.com/artyom-poptsov/guile-udev")
