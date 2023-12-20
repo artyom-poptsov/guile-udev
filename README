@@ -1,7 +1,7 @@
 # -*- mode: org; -*-
 
 * Guile-Udev
-[[https://github.com/artyom-poptsov/guile-udev/actions/workflows/guile2.2.yml/badge.svg]] [[https://github.com/artyom-poptsov/guile-udev/actions/workflows/guile3.0.yml/badge.svg]]
+[[https://github.com/artyom-poptsov/guile-udev/actions/workflows/guile2.2.yml/badge.svg]] [[https://github.com/artyom-poptsov/guile-udev/actions/workflows/guile3.0.yml/badge.svg]] [[https://github.com/artyom-poptsov/guile-udev/actions/workflows/guix.yml/badge.svg]]
 
 Guile-Udev is a [[https://www.gnu.org/software/guile/][GNU Guile]] bindings to [[https://en.wikipedia.org/wiki/Udev][libudev]].
 
