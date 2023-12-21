@@ -72,12 +72,10 @@ gudev_hwdb_t* make_gudev_hwdb()
  */
 SCM udev_hwdb_to_scm(SCM udev, struct udev_hwdb *udev_hwdb)
 {
-     SCM smob;
      gudev_hwdb_t* uhd = make_gudev_hwdb();
      uhd->udev      = udev;
      uhd->udev_hwdb = udev_hwdb;
-     SCM_NEWSMOB(smob, udev_hwdb_tag, uhd);
-     return smob;
+     return scm_new_smob(udev_hwdb_tag, uhd);
 }
 
 gudev_hwdb_t* gudev_hwdb_from_scm(SCM x)

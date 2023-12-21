@@ -65,12 +65,11 @@ SCM_DEFINE_1(gudev_is_udev_p, "udev?", (SCM x),
  */
 SCM udev_to_scm(struct udev *udev)
 {
-    SCM smob;
     gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof(gudev_t),
                                             "udev");
     ud->udev = udev;
-    SCM_NEWSMOB(smob, udev_tag, ud);
-    return smob;
+
+    return scm_new_smob(udev_tag, ud);
 }
 
 /**
@@ -86,12 +85,11 @@ gudev_t* gudev_from_scm(SCM x)
 
 SCM_DEFINE_0(udev_make_udev, "make-udev", "Make an Udev handle.")
 {
-    SCM smob;
     gudev_t* ud = (gudev_t *) scm_gc_malloc(sizeof (gudev_t),
                                             "udev");
     ud->udev = udev_new();
-    SCM_NEWSMOB(smob, udev_tag, ud);
-    return smob;
+
+    return scm_new_smob(udev_tag, ud);
 }
 
 /**

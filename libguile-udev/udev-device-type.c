@@ -65,12 +65,10 @@ gudev_device_t* make_gudev_device()
  */
 SCM udev_device_to_scm(SCM udev, struct udev_device *udev_device)
 {
-    SCM smob;
     gudev_device_t* udd = make_gudev_device();
     udd->udev_device = udev_device;
     udd->udev        = udev;
-    SCM_NEWSMOB(smob, udev_device_tag, udd);
-    return smob;
+    return scm_new_smob(udev_device_tag, udd);
 }
 
 /**

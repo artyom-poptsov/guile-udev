@@ -77,7 +77,6 @@ gudev_monitor_t* make_udev_monitor()
  */
 SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor)
 {
-    SCM smob;
     gudev_monitor_t* umd = make_udev_monitor();
     umd->udev             = udev;
     umd->udev_monitor     = udev_monitor;
@@ -87,9 +86,7 @@ SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor)
     umd->scanner_callback = SCM_BOOL_F;
     pthread_mutex_init(&umd->lock, NULL);
 
-    SCM_NEWSMOB(smob, udev_monitor_tag, umd);
-
-    return smob;
+    return scm_new_smob(udev_monitor_tag, umd);
 }
 
 /**
