@@ -1,6 +1,7 @@
 /* udev-monitor-func.c -- Udev monitor functions.
  *
  * Copyright (C) 2020-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+ * Copyright (C) 2023 Maxim Cournoyer <maxim.cournoyer@gmail.com>
  *
  * This file is part of Guile-Udev.
  *
