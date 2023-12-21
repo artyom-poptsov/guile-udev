@@ -163,6 +163,10 @@ configured and built the project, e.g.@:
 
 These procedures are available from the module @code{(udev udev)}.
 
+@deftp {Type} <udev>
+A Guile representation of an Udev handle.
+@end deftp
+
 @deffn {Scheme Procedure} make-udev
 Make and return an udev object.
 @end deffn
@@ -182,6 +186,20 @@ procedure.  The timeout seconds and milliseconds parts are set to zero by
 default.
 
 These procedures are available from the module @code{(udev monitor)}.
+
+@deftp {Type} <monitor>
+A Guile representation of an Udev monitor handle.
+
+Attributes:
+@itemize
+@item @code{udev}
+Udev instance to which this monitor object belongs to.
+@item @code{scanner-callback}
+Monitor scanner callback which is called when an event is occurred.
+@item @code{error-callback}
+A callback that is called when an error is occurred.
+@end itemize
+@end deftp
 
 @deffn {Scheme Procedure} %make-udev-monitor udev
 Return a new udev monitor object for the given @var{udev} instance.
@@ -299,6 +317,16 @@ Return the parent udev object for an @var{udev-monitor}.
 
 These procedures are available from the module @code{(udev monitor)}.
 
+@deftp {Type} <device>
+A Guile representation of an Udev device handle.
+
+Attributes:
+@itemize
+@item @code{udev}
+Udev instance to which this device object belongs to.
+@end itemize
+@end deftp
+
 @deffn {Scheme Procedure} udev-device? x
 Check if @var{x} is an udev-device object. Return @code{#t} if it is, or
 @code{#f} otherwise.
@@ -354,6 +382,16 @@ Udev hardware database (HWDB) allows to make queries to the database using
 modalias strings.
 
 The procedures are defined in @code{(udev hwdb)} module.
+
+@deftp {Type} <hwdb>
+A Guile representation of an Udev hardware database handle.
+
+Attributes:
+@itemize
+@item @code{udev}
+Udev instance to which this hardware database object belongs to.
+@end itemize
+@end deftp
 
 @deffn {Scheme Procedure} make-udev-hwdb
 Return a new udev hardware database instance.
