@@ -1,6 +1,6 @@
 /* udev-monitor-func.c -- Udev monitor functions.
  *
- * Copyright (C) 2020 Artyom V. Poptsov <poptsov.artyom@gmail.com>
+ * Copyright (C) 2020-2023 Artyom V. Poptsov <poptsov.artyom@gmail.com>
  *
  * This file is part of Guile-Udev.
  *
@@ -51,10 +51,10 @@ SCM_DEFINE(gudev_add_filter_x, "udev-monitor-add-filter!", 2, 1, 0,
     c_subsystem = scm_to_locale_string(subsystem);
     scm_dynwind_free(c_subsystem);
 
-    if (!SCM_UNBNDP(devtype))
+    if (! SCM_UNBNDP(devtype)) {
         c_devtype = scm_to_locale_string(devtype);
-
-    scm_dynwind_free(c_devtype);
+        scm_dynwind_free(c_devtype);
+    }
 
     result = udev_monitor_filter_add_match_subsystem_devtype(umd->udev_monitor,
                                                              c_subsystem,
