@@ -45,7 +45,8 @@ struct gudev_monitor {
      /**
       * @brief timeout -- 'select' timeout for the device monitor.
       */
-     struct timeval timeout;
+     SCM secs;
+     SCM usecs;
 
      pthread_mutex_t lock;
      pthread_t scanner_thread;
