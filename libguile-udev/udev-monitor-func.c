@@ -200,7 +200,7 @@ void* udev_monitor_scanner(void* arg)
 
     monitor_fd = udev_monitor_get_fd(umd->udev_monitor);
     if (monitor_fd < 0) {
-         char msg[] = "Could not udev monitor file descriptor.";
+         char msg[] = "Could not retrieve udev monitor file descriptor.";
          scm_call_2(error_callback, udev_monitor,
                     scm_from_locale_string(msg));
          umd->is_scanning = 0;
