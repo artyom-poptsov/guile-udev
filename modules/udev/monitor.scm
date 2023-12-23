@@ -61,7 +61,7 @@ or #f to match any type."
   (let ((monitor (%make-udev-monitor udev)))
     (udev-monitor-set-timeout!  monitor timeout-sec timeout-usec)
     (udev-monitor-set-callback! monitor callback)
-    (udev-monitor-set-error-callback! monitor callback)
+    (udev-monitor-set-error-callback! monitor error-callback)
     (when filter
       (let ((subsystem (car filter))
             (devtype (cadr filter)))
