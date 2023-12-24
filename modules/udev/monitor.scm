@@ -50,18 +50,22 @@
                                               (format (current-error-port)
                                                       "ERROR: in ~a: ~a~%"
                                                       monitor error-message)))
-                            (filter       #f)
-                            (timeout-usec 0)
-                            (timeout-sec  0))
+                            filter
+                            timeout-sec
+                            timeout-usec)
   "Create a new 'udev-monitor' object configured with the specified parameters.
 CALLBACK is a one argument procedure (receiving a 'udev-device' object) called
 when an event matching the specified FILTER.  FILTER is a list whose first
 element is the device subsystem, and whose second argument is the device type,
-or #f to match any type."
+or #f to match any type.  If a timeout is desired, TIMEOUT-SEC or both
+TIMEOUT-SEC and TIMEOUT-USEC may be provided as non-negative numbers of
+seconds and microseconds, respectively.  If TIMEOUT-USEC, is used, TIMEOUT-SEC
+must also have a value, else it is ignored, as for the 'secs' and 'usecs'
+argument of Guile's 'select' procedure."
   (let ((monitor (%make-udev-monitor udev)))
     (udev-monitor-set-timeout!  monitor timeout-sec timeout-usec)
     (udev-monitor-set-callback! monitor callback)
-    (udev-monitor-set-error-callback! monitor callback)
+    (udev-monitor-set-error-callback! monitor error-callback)
     (when filter
       (let ((subsystem (car filter))
             (devtype (cadr filter)))

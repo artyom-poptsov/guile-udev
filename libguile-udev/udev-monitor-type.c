@@ -81,8 +81,8 @@ SCM gudev_monitor_to_scm(SCM udev, struct udev_monitor *udev_monitor)
     gudev_monitor_t* umd = make_udev_monitor();
     umd->udev             = udev;
     umd->udev_monitor     = udev_monitor;
-    umd->timeout.tv_sec   = 0;
-    umd->timeout.tv_usec  = 0;
+    umd->secs             = SCM_BOOL_F;
+    umd->usecs            = SCM_BOOL_F;
     umd->is_scanning      = 0;
     umd->scanner_callback = SCM_BOOL_F;
     pthread_mutex_init(&umd->lock, NULL);

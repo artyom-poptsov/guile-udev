@@ -43,6 +43,11 @@ Targets are:
 - Document Guile-Udev types.
 
   Thanks to Maxim Cournoyer <maxim.cournoyer@gmail.com>.
+** Change the default the timeout values of `make-udev-monitor' to #f
+The TIMEOUT-SEC and TIMEOUT-USEC arguments now default to #f instead of 0,
+which means that the `select' call no longer polls by default, which would
+consume 100% of a CPU core (see:
+https://github.com/artyom-poptsov/guile-udev/issues/5).
 
 * Changes in version 0.2.4 (2022-12-27)
 ** Bugfix: Check every string that comes from the udev for NULL

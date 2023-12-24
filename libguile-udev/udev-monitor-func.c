@@ -140,34 +140,23 @@ SCM_DEFINE_N(gudev_monitor_set_error_callback_x, "udev-monitor-set-error-callbac
 }
 #undef FUNC_NAME
 
-SCM_DEFINE_N(gudev_monitor_set_timeout_x, "udev-monitor-set-timeout!", 3,
-             (SCM udev_monitor, SCM seconds, SCM milliseconds),
-             "Set monitor event poll timeout.  \
-Throws 'guile-udev-error' on errors.")
+SCM_DEFINE(gudev_monitor_set_timeout_x, "udev-monitor-set-timeout!", 1, 2, 0,
+	   (SCM udev_monitor, SCM secs, SCM usecs),
+	   "Set monitor event poll @var{seconds} and @var{microseconds}\n"
+	   "timeout non-negative numbers in seconds and microseconds,\n"
+	   "respectively.\n\n"
+
+	   "@var{secs} and @var{usecs} are optional;\n"
+	   "They share the same semantic as the corresponding arguments of\n"
+	   "Guile's `select' abstraction.  When left unspecified, the timeout\n"
+	   "is cleared.\n\n"
+
+	   "Throws 'guile-udev-error' on errors.")
 #define FUNC_NAME s_gudev_monitor_set_timeout_x
 {
      gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
-     SCM_ASSERT(scm_number_p(seconds),      seconds,      SCM_ARG2, FUNC_NAME);
-     SCM_ASSERT(scm_number_p(milliseconds), milliseconds, SCM_ARG3, FUNC_NAME);
-     long c_seconds      = scm_to_long(seconds);
-     long c_milliseconds = scm_to_long(milliseconds);
-
-     if (c_seconds < 0) {
-          guile_udev_error1(
-               FUNC_NAME,
-               "'Seconds' part of the timeout must be >= 0.",
-               seconds);
-     }
-
-     if (c_milliseconds < 0) {
-          guile_udev_error1(
-               FUNC_NAME,
-               "'Milliseconds' part of the timeout must be >= 0.",
-               milliseconds);
-     }
-
-     umd->timeout.tv_sec  = c_seconds;
-     umd->timeout.tv_usec = c_milliseconds;
+     umd->secs = secs;
+     umd->usecs = usecs;
 
      scm_remember_upto_here_1(udev_monitor);
 
@@ -175,15 +164,32 @@ Throws 'guile-udev-error' on errors.")
 }
 #undef FUNC_NAME
 
+struct select_args_data {
+     SCM reads;
+     SCM secs;
+     SCM usecs;
+};
+
+/* A procedure for calling scm_select via scm_internal_catch. */
+SCM call_select(void *data) {
+     struct select_args_data* args = data;
+     return scm_select(args->reads, SCM_EOL, SCM_EOL, args->secs, args->usecs);
+}
+
+/* Dummy handler returning false. */
+SCM false_on_exception(void *data, SCM key, SCM args) {
+     return SCM_BOOL_F;
+}
+
 void* udev_monitor_scanner(void* arg)
 #define FUNC_NAME "udev_monitor_scanner"
 {
     SCM udev_monitor = (SCM) arg;
     gudev_monitor_t* umd = gudev_monitor_from_scm(udev_monitor);
-    fd_set fd_set_;
     int result;
-    int select_result;
-    int monitor_fd;
+    SCM select_result;
+    int c_monitor_fd;
+    SCM monitor_fd;
     struct udev_device *dev;
     SCM error_callback = umd->error_callback;
 
@@ -198,30 +204,41 @@ void* udev_monitor_scanner(void* arg)
          return NULL;
     }
 
-    monitor_fd = udev_monitor_get_fd(umd->udev_monitor);
+    c_monitor_fd = udev_monitor_get_fd(umd->udev_monitor);
+    monitor_fd = scm_from_int(c_monitor_fd);
+
     if (monitor_fd < 0) {
-         char msg[] = "Could not udev monitor file descriptor.";
+         char msg[] = "Could not retrieve udev monitor file descriptor.";
          scm_call_2(error_callback, udev_monitor,
                     scm_from_locale_string(msg));
          umd->is_scanning = 0;
          return NULL;
     }
 
+    struct select_args_data select_args;
+    select_args.reads = scm_list_1(monitor_fd);
+    select_args.secs = umd->secs;
+    select_args.usecs = umd->usecs;
+
     SCM callback = umd->scanner_callback;
     SCM device;
+    SCM read_fdes;
 
     while (1) {
-        struct timeval timeout = umd->timeout;
         pthread_mutex_lock(&umd->lock);
         if (! umd->is_scanning) {
             break;
         }
         pthread_mutex_unlock(&umd->lock);
 
-        FD_ZERO(&fd_set_);
-        FD_SET(monitor_fd, &fd_set_);
-        select_result = select(monitor_fd + 1, &fd_set_, NULL, NULL, &timeout);
-        if (select_result == -1) {
+	/* We use scm_select here instead of C select so as to benefit from
+	 * the 'secs' and 'usecs' arguments validation/behavior that it
+	 * provides. */
+	select_result = scm_internal_catch(scm_from_utf8_symbol("system-error"),
+					   call_select, &select_args,
+					   false_on_exception, NULL);
+	// Actual error handling is done here.
+        if (scm_is_false(select_result)) {
              char msg[] = "Error during 'select' call.";
              scm_call_2(error_callback, udev_monitor,
                         scm_from_locale_string(msg));
@@ -229,7 +246,10 @@ void* udev_monitor_scanner(void* arg)
              pthread_cancel(pthread_self());
              break;
         }
-        if (FD_ISSET(monitor_fd, &fd_set_)) {
+
+	read_fdes = scm_car(select_result);
+
+	if (scm_member(monitor_fd, read_fdes)) {
             dev = udev_monitor_receive_device(umd->udev_monitor);
             device = udev_device_to_scm(umd->udev, dev);
             scm_call_1(callback, device);

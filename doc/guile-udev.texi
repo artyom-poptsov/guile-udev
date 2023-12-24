@@ -182,8 +182,15 @@ Monitor object allows to scan for device events.  When an event occurs, the
 monitor calls a specified callback.  Inside the scanner loop, the monitor
 calls @code{select} procedure to check if any events available.  The
 @code{select} timeout can be set by @code{udev-monitor-set-timeout!}
-procedure.  The timeout seconds and milliseconds parts are set to zero by
-default.
+procedure.  By default, no timeout is used, which means the monitor will wait
+forever for an event to be triggered.
+
+@quotation note
+The monitor scanner loops infinitely; that is, even when a timeout value is
+used, the scanner will keep monitoring events, but will poll at the requested
+period.  For maximum efficiency, it is recommended to not use a timeout and
+let the underlying @code{select} system call indefinitely wait for an event.
+@end quotation
 
 These procedures are available from the module @code{(udev monitor)}.
 
@@ -233,28 +240,34 @@ Example:
 (make-udev-monitor udev #:filter (list "usb" "usb_device"))
 @end lisp
 @item timeout-sec
-Timeout for 'select' call in the event listener.  This part of the timeout is
-specified in seconds.
+Optional timeout for 'select' call in the event listener.  This part of the
+timeout is specified in seconds.
 
 Expected type: Non-negative integer.
 
-Default value: 0
+Default value: @code{#f}
 
-Example:
+Examples:
+
 @lisp
-(make-udev-monitor udev #:timeout-sec 1)
+(make-udev-monitor udev)   ;no timeout, most efficient
 @end lisp
+
+@lisp
+(make-udev-monitor udev #:timeout-sec 3.33)  ;3.33 s poll period
+@end lisp
+
 @item timeout-usec
-Timeout for 'select' call in the event listener.  This part of the timeout is
-specified in milliseconds.
+Optional timeout for 'select' call in the event listener, in microseconds.
+The @var{timeout-sec} argument must be specified as well otherwise
+@var{timeout-usec} is ignored.
 
 Expected type: Non-negative integer.
 
-Default value: 0
+Default value: @code{#f}
 
-Example:
 @lisp
-(make-udev-monitor udev #:timeout-usec 1)
+(make-udev-monitor udev #:timeout-sec 0 #:timeout-usec 250)  ;250 us poll period
 @end lisp
 @end table
 
@@ -278,10 +291,12 @@ Remove all the filters that was set for @var{udev-monitor}. Throws
 @code{guile-udev-error} on errors.
 @end deffn
 
-@deffn {Scheme Procedure} udev-monitor-set-timeout! udev-monitor seconds milliseconds
-Set the @var{udev-monitor} udev event polling timeout. The @var{seconds} and
-@var{milliseconds} parameters must be integer numbers greater or equal to
-zero.
+@deffn {Scheme Procedure} udev-monitor-set-timeout! udev-monitor [secs] [usecs]
+Set the @var{udev-monitor} udev event polling timeout.  The @var{secs}
+parameter must be a non-negative integer or float representing seconds, while
+@var{usecs} must be a non-negative integer representing microseconds.  To
+clear the timeout value, @var{secs} may be set to @code{#f} or omitted
+entirely.
 @end deffn
 
 @deffn {Scheme Procedure} udev-monitor-set-callback! udev-monitor callback
