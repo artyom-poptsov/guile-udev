@@ -9,4 +9,7 @@ See also files THANKS and ChangeLog.
 * Mathieu Othacehe <othacehe@gnu.org>
   Bug reports in GNU Guix mailing list.
 * Maxim Cournoyer <maxim.cournoyer@gmail.com>
-  Improvements to the documentation.
+  Improvements to the documentation, to the Guile-Udev monitor and to the
+  example program.
+* Zheng Junjie <zhengjunjie@iscas.ac.cn>
+  Improvements to 'guix.scm'.
