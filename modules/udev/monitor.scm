@@ -63,7 +63,11 @@ seconds and microseconds, respectively.  If TIMEOUT-USEC, is used, TIMEOUT-SEC
 must also have a value, else it is ignored, as for the 'secs' and 'usecs'
 argument of Guile's 'select' procedure."
   (let ((monitor (%make-udev-monitor udev)))
-    (udev-monitor-set-timeout!  monitor timeout-sec timeout-usec)
+    ;; Guile's select accepts #f for its optional 'secs' argument,
+    ;; but not for usecs'.
+    (if timeout-usec
+        (udev-monitor-set-timeout! monitor timeout-sec timeout-usec)
+        (udev-monitor-set-timeout! monitor timeout-sec))
     (udev-monitor-set-callback! monitor callback)
     (udev-monitor-set-error-callback! monitor error-callback)
     (when filter
