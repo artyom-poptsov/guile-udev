@@ -27,7 +27,6 @@
 ;;; Code:
 
 (define-module (udev monitor)
-  #:use-module (srfi srfi-1)
   #:export (udev-monitor
 	    udev-monitor?
 	    %make-udev-monitor
@@ -64,9 +63,11 @@ seconds and microseconds, respectively.  If TIMEOUT-USEC, is used, TIMEOUT-SEC
 must also have a value, else it is ignored, as for the 'secs' and 'usecs'
 argument of Guile's 'select' procedure."
   (let ((monitor (%make-udev-monitor udev)))
-    (apply udev-monitor-set-timeout!
-           (cons monitor
-                 (filter-map identity (list timeout-sec timeout-usec))))
+    ;; Guile's select accepts #f for its optional 'secs' argument,
+    ;; but not for usecs'.
+    (if timeout-usec
+        (udev-monitor-set-timeout! monitor timeout-sec timeout-usec)
+        (udev-monitor-set-timeout! monitor timeout-sec))
     (udev-monitor-set-callback! monitor callback)
     (udev-monitor-set-error-callback! monitor error-callback)
     (when filter
